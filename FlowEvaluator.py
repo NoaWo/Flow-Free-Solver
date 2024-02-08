@@ -60,12 +60,18 @@ class FlowEvaluator(SimpleIndividualEvaluator):
                     # need to be exactly one neighbor in the same color
                     curr_color = -curr_color
                     neighbors_colors = [board[i, j] for (i, j) in self._neighbors[curr_cell]]
-                    eval_cell = neighbors_colors.count(curr_color) == 1
+                    num_of_same_color = neighbors_colors.count(curr_color)
+                    eval_cell = num_of_same_color == 1
+                    # if num_of_same_color > 1:
+                    #     eval_cell = -5
                     value += eval_cell
                 else:
                     # need to be exactly two neighbor in the same color
                     neighbors_colors = [board[i, j] for (i, j) in self._neighbors[curr_cell]]
-                    eval_cell = neighbors_colors.count(curr_color) == 2
+                    num_of_same_color = neighbors_colors.count(curr_color)
+                    eval_cell = num_of_same_color == 2
+                    if num_of_same_color > 1:
+                        eval_cell = -2
                     value += eval_cell
 
         # fitness value is the total value of the bag

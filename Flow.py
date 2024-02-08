@@ -8,6 +8,9 @@ class Flow():
         self._board_as_vector = np.array(board).reshape(-1)
         self._colors = len(board)
 
+    def get_board_as_vector(self):
+        return self._board_as_vector
+
     def creator(self, individual, index):
         if self._board_as_vector[index] < 0:
             return self._board_as_vector[index]
