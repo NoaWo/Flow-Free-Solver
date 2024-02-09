@@ -17,27 +17,38 @@ from Flow import Flow
 from FlowEvaluator import FlowEvaluator
 from FlowNPointMutation import FlowNPointMutation
 
-board = [[-1, 0, -2, 0, -3],
+board2 = [[-1, 0, -2, 0, -3],
          [0, 0, -4, 0, -5],
          [0, 0, 0, 0, 0],
          [0, -2, 0, -3, 0],
          [0, -1, -4, -5, 0]]
+board =[
+[0,0,0,0,0,0,0,0,0,0],
+[0,-1,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,-3,-4,0,0],
+[-2,0,0,-8,-9,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[-7,-8,0,0,-7,0,0,0,0,0],
+[0,0,-6,0,0,-9,0,-4,-1,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,-5,-10,0,-10,0,0,-5,-3,0],
+[0,0,0,0,0,0,0,-6,-2,0]]
 board_size = len(board)
 flow = Flow(board)
-
+evaluator = FlowEvaluator(board_size)
 algo = SimpleEvolution(
         Subpopulation(creators=GAIntVectorCreator(length=board_size * board_size, bounds=(1, board_size),
                                                   gene_creator=flow.creator),
                       population_size=500,
                       # user-defined fitness evaluation method
-                      evaluator=FlowEvaluator(board_size),
+                      evaluator=evaluator,
                       # maximization problem (fitness is sum of values), so higher fitness is better
                       higher_is_better=True,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
-                          VectorKPointsCrossover(probability=0.75, k=2),
-                          FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size,
-                                             probability=0.1, n=3)
+                          VectorKPointsCrossover(probability=0.73, k=4),
+                          FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size, evaluator=evaluator,
+                                             probability=0.02, n=1)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple

@@ -52,27 +52,42 @@ class FlowEvaluator(SimpleIndividualEvaluator):
 
         for i in range(self._board_size):
             for j in range(self._board_size):
-                curr_cell: tuple[int, int] = (i, j)
-                curr_color = board[i, j]
-                if curr_color == 0:
-                    return -np.inf
-                elif curr_color < 0:  # dot cell
-                    # need to be exactly one neighbor in the same color
-                    curr_color = -curr_color
-                    neighbors_colors = [board[i, j] for (i, j) in self._neighbors[curr_cell]]
-                    num_of_same_color = neighbors_colors.count(curr_color)
-                    eval_cell = num_of_same_color == 1
-                    # if num_of_same_color > 1:
-                    #     eval_cell = -5
-                    value += eval_cell
-                else:
-                    # need to be exactly two neighbor in the same color
-                    neighbors_colors = [board[i, j] for (i, j) in self._neighbors[curr_cell]]
-                    num_of_same_color = neighbors_colors.count(curr_color)
-                    eval_cell = num_of_same_color == 2
-                    if num_of_same_color > 1:
-                        eval_cell = -2
-                    value += eval_cell
-
-        # fitness value is the total value of the bag
+                value += self.eval_cell(i, j, board)
         return value
+
+    def eval_cell(self, i, j, board):
+        curr_cell: tuple[int, int] = (i, j)
+        curr_color = board[i, j]
+        if curr_color == 0:
+            return -np.inf
+        elif curr_color < 0:  # dot cell
+            # need to be exactly one neighbor in the same color
+            curr_color = -curr_color
+            neighbors_colors = [abs(board[i, j]) for (i, j) in self._neighbors[curr_cell]]
+            eval_cell = neighbors_colors.count(curr_color) == 1
+        else:
+            # need to be exactly two neighbor in the same color
+            neighbors_colors = [abs(board[i, j]) for (i, j) in self._neighbors[curr_cell]]
+            eval_cell = neighbors_colors.count(curr_color) == 2
+        return eval_cell
+
+
+"""
+def no_square(board, i, j):
+    color = abs(board[i,j])
+    if i+1 <= len(board) - 1:
+        if j+1 <= len(board) - 1:
+            if abs(board[i+1,j]) == color and abs(board[i,j+1]) == color and abs(board[i+1,j+1]) == color:
+                return False
+        if j-1 >= 0:
+            if abs(board[i+1,j]) == color and abs(board[i,j-1]) == color and abs(board[i+1,j-1]) == color:
+                return False
+    if i-1 >= 0:
+        if j + 1 <= len(board) - 1:
+            if abs(board[i - 1, j]) == color and abs(board[i, j + 1]) == color and abs(board[i - 1, j + 1]) == color:
+                return False
+        if j - 1 >= 0:
+            if abs(board[i - 1, j]) == color and abs(board[i, j - 1]) == color and abs(board[i - 1, j - 1]) == color:
+                return False
+    return True
+"""
