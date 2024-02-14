@@ -9,38 +9,35 @@ from FlowEvaluator import FlowEvaluator
 
 
 class FlowNPointMutation(VectorNPointMutation):
-    """
-    Uniform N Point Integer Mutation
-    """
-
-    def __init__(self, board_as_vector, board_size, evaluator, n=1, probability=1.0, arity=1, events=None):
+    def __init__(self, board_as_vector, board_size, colors, evaluator, n=1, probability=1.0, is_smart=False, arity=1, events=None):
         super().__init__(probability=probability,
                          arity=arity,
                          mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(index),
                          events=events,
-                         success_checker=self.default_success_checker,
+                         cell_selector=self.cell_selector,
+                         success_checker=self.success_checker,
                          n=n)
         self._board_as_vector = board_as_vector
         self._evaluator = evaluator
-        self._colors = board_size
+        self._colors = colors
         self._board_size = board_size
         self._valid_cells = [i for i in range(len(board_as_vector)) if board_as_vector[i] >= 0]
+        if is_smart:
+            self.cell_selector = self.smart_cell_selector
 
-    def default_cell_selector(self, vec: Vector) -> List[int]:
-        # vector_indices = range(vec.size())
-        """
-        board = np.array(vec.get_vector()).reshape((self._board_size, self._board_size))
-        defected_cells = [i for i in self._valid_cells if not
-                          self._evaluator.eval_cell(i // self._board_size, i % self._board_size, board)]
-        k=self.n
-        while len(defected_cells) < k and k > 1:
-            k = k - 1
-        if len(defected_cells) == 0:
-            defected_cells = self._valid_cells"""
+    def cell_selector(self, vec: Vector) -> List[int]:
         return random.sample(self._valid_cells, k=self.n)
 
-    # def success_checker(self, old_vec: Vector, new_vec: Vector):
-    def default_success_checker(self, old_vec: Vector, new_vec: Vector) -> bool:
+    def smart_cell_selector(self, vec: Vector) -> List[int]:
+        board = np.array(vec.get_vector()).reshape((self._board_size, self._board_size))
+        defected_cells = [i for i in self._valid_cells if
+                          self._evaluator.eval_cell(i // self._board_size, i % self._board_size, board) <= 0]
+        k = self.n
+        while len(defected_cells) < k and k > 1:
+            k = k - 1
+        return random.sample(defected_cells, k=k)
+
+    def success_checker(self, old_vec: Vector, new_vec: Vector) -> bool:
         vec = new_vec.get_vector()
         for i in range(new_vec.size()):
             if self._board_as_vector[i] < 0:
