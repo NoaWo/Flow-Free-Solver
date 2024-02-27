@@ -1,19 +1,12 @@
 import numpy as np
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.creators.ga_creators.bit_string_vector_creator import GABitStringVectorCreator
 from eckity.creators.ga_creators.int_vector_creator import GAIntVectorCreator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
-from eckity.genetic_operators.mutations.vector_random_mutation import BitStringVectorFlipMutation, \
-    IntVectorOnePointMutation
-from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 
-from examples.vectorga.knapsack.knapsack_evaluator import KnapsackEvaluator, NUM_ITEMS
-
-from Color import Color
 from Flow import Flow
 from FlowEvaluator import FlowEvaluator
 from FlowNPointMutation import FlowNPointMutation
@@ -32,22 +25,22 @@ board = [[0, 0, 0, 0, 0, 0, -1],
          [0, 0, 0, 0, -3, -6, 0],
          [0, 0, 0, 0, 0, -1, -5]]
 colors = 6
-board =[
-[0,0,0,0,0,0,0,0,0,0],
-[0,-1,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,-3,-4,0,0],
-[-2,0,0,-8,-9,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0],
-[-7,-8,0,0,-7,0,0,0,0,0],
-[0,0,-6,0,0,-9,0,-4,-1,0],
-[0,0,0,0,0,0,0,0,0,0],
-[0,-5,-10,0,-10,0,0,-5,-3,0],
-[0,0,0,0,0,0,0,-6,-2,0]]
-colors = 10
+# board =[
+# [0,0,0,0,0,0,0,0,0,0],
+# [0,-1,0,0,0,0,0,0,0,0],
+# [0,0,0,0,0,0,-3,-4,0,0],
+# [-2,0,0,-8,-9,0,0,0,0,0],
+# [0,0,0,0,0,0,0,0,0,0],
+# [-7,-8,0,0,-7,0,0,0,0,0],
+# [0,0,-6,0,0,-9,0,-4,-1,0],
+# [0,0,0,0,0,0,0,0,0,0],
+# [0,-5,-10,0,-10,0,0,-5,-3,0],
+# [0,0,0,0,0,0,0,-6,-2,0]]
+# colors = 10
 board_size = len(board)
 flow = Flow(board, colors)
 evaluator = FlowEvaluator(board_size, colors)
-termination_checker = FlowTerminationChecker(evaluator)
+termination_checker = FlowTerminationChecker(board_size)
 algo = SimpleEvolution(
         Subpopulation(creators=GAIntVectorCreator(length=board_size * board_size, bounds=(1, colors),
                                                   gene_creator=flow.creator),

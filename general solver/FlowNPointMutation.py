@@ -1,11 +1,8 @@
 import random
-
 import numpy as np
 from eckity.genetic_encodings.ga.vector_individual import Vector
 from typing import List
 from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
-
-from FlowEvaluator import FlowEvaluator
 
 
 class FlowNPointMutation(VectorNPointMutation):

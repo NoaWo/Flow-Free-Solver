@@ -111,5 +111,3 @@ class FlowEvaluator(SimpleIndividualEvaluator):
     def is_optimal(self, individual):
         return self.evaluate_individual(individual) == self._board_size * self._board_size
         # return self.evaluate_individual(individual) == self._board_size * self._board_size + self._board_size
-
-
