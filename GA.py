@@ -10,6 +10,7 @@ from eckity.genetic_operators.selections.tournament_selection import TournamentS
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 from board import draw_board
+import threading
 
 from examples.vectorga.knapsack.knapsack_evaluator import KnapsackEvaluator, NUM_ITEMS
 
@@ -38,34 +39,62 @@ board_size = len(board)
 flow = Flow(board)
 evaluator = FlowEvaluator(board_size)
 algo = SimpleEvolution(
-        Subpopulation(creators=GAIntVectorCreator(length=board_size * board_size, bounds=(1, board_size),
-                                                  gene_creator=flow.creator),
-                      population_size=200,
-                      # user-defined fitness evaluation method
-                      evaluator=evaluator,
-                      # maximization problem (fitness is sum of values), so higher fitness is better
-                      higher_is_better=True,
-                      # genetic operators sequence to be applied in each generation
-                      operators_sequence=[
-                          VectorKPointsCrossover(probability=0.7, k=2),
-                          FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size, evaluator=evaluator,
-                                             probability=0.02, n=1)
-                      ],
-                      selection_methods=[
-                          # (selection method, selection probability) tuple
-                          (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
-                      ]),
-        breeder=SimpleBreeder(),
-        max_workers=30,
-        max_generation=50,
-        statistics=BestAverageWorstStatistics()
-    )
+    Subpopulation(creators=GAIntVectorCreator(length=board_size * board_size, bounds=(1, board_size),
+                                              gene_creator=flow.creator),
+                  population_size=200,
+                  # user-defined fitness evaluation method
+                  evaluator=evaluator,
+                  # maximization problem (fitness is sum of values), so higher fitness is better
+                  higher_is_better=True,
+                  # genetic operators sequence to be applied in each generation
+                  operators_sequence=[
+                      VectorKPointsCrossover(probability=0.7, k=2),
+                      FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size,
+                                         evaluator=evaluator,
+                                         probability=0.02, n=1)
+                  ],
+                  selection_methods=[
+                      # (selection method, selection probability) tuple
+                      (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
+                  ]),
+    breeder=SimpleBreeder(),
+    max_workers=30,
+    max_generation=50,
+    statistics=BestAverageWorstStatistics()
+)
 
-# evolve the generated initial population
-algo.evolve()
-# Execute (show) the best solution
-result = algo.execute()
-solved_board = np.array(result).reshape((board_size, board_size))
+boards_lock = threading.Lock()
+boards = []
 
-draw_board(solved_board)
 
+def run_genetic_algo():
+    # evolve the generated initial population
+    algo.evolve()
+    # Execute (show) the best solution
+    result = algo.execute()
+    solved_board = np.array(result).reshape((board_size, board_size))
+    boards_lock.acquire()
+    boards.append(solved_board)
+    boards_lock.release()
+
+
+threads = []
+RUNS = 5
+for i in range(RUNS):
+    thread = threading.Thread(target=run_genetic_algo)
+    threads.append(thread)
+
+for thread in threads:
+    thread.start()
+
+for thread in threads:
+    thread.join()
+
+max_score = 0
+best_board = None
+for board in boards:
+    score = FlowEvaluator.evaluate_individual(board)
+    if score > max_score:
+        max_score = score
+        best_board = board
+draw_board(best_board)
