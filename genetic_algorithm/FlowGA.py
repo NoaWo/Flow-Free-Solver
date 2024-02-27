@@ -15,18 +15,18 @@ from genetic_algorithm.FlowTerminationChecker import FlowTerminationChecker
 board = Board(5, 5, [((0,0),(4,1)), ((0,2),(3,1)), ((0,4),(3,3)), ((1,2),(4,2)), ((1,4),(4,3))])
 board = Board(7, 7, [((0,6),(6,5)), ((1,5),(2,1)), ((1,6),(5,4)), ((3,3),(4,2)), ((3,4),(6,6)),
                                             ((5,5),(4,4))])
-board = Board(10, 10, [((1,1),(6,8)), ((3,0),(9,8)), ((8,8),(2,6)), ((2,7),(6,7)), ((8,1),(8,7)),
-                                            ((9,7),(6,2)), ((5,0),(5,4)), ((5,1),(3,3)), ((3,4),(6,5)), ((8,4),(8,2))])
+#board = Board(10, 10, [((1,1),(6,8)), ((3,0),(9,8)), ((8,8),(2,6)), ((2,7),(6,7)), ((8,1),(8,7)),
+#                                            ((9,7),(6,2)), ((5,0),(5,4)), ((5,1),(3,3)), ((3,4),(6,5)), ((8,4),(8,2))])
 creator = FlowCreator(board.rows, board.columns, board.dots)
 
 algo = SimpleEvolution(
         Subpopulation(creators=creator,
-                      population_size=5000,
+                      population_size=2000,
                       # user-defined fitness evaluation method
                       evaluator=FlowEvaluator(board.rows, board.columns),
                       # maximization problem (fitness is sum of values), so higher fitness is better
                       higher_is_better=False,
-                      elitism_rate=1/2500,
+                      elitism_rate=1/2000,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           FlowCrossover(board.rows, board.columns, board.colors, random_partition_size=True,
@@ -47,7 +47,7 @@ algo = SimpleEvolution(
                       ]),
         breeder=SimpleBreeder(),
         max_workers=20,
-        max_generation=5000,
+        max_generation=200,
         statistics=BestAverageWorstStatistics(),
         termination_checker=FlowTerminationChecker()
     )
