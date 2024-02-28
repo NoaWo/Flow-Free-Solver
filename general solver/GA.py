@@ -11,6 +11,7 @@ from Flow import Flow
 from FlowEvaluator import FlowEvaluator
 from FlowNPointMutation import FlowNPointMutation
 from FlowTerminationChecker import FlowTerminationChecker
+from GUI import draw_board
 
 board = [[-1, 0, -2, 0, -3],
          [0, 0, -4, 0, -5],
@@ -25,18 +26,18 @@ board = [[0, 0, 0, 0, 0, 0, -1],
          [0, 0, 0, 0, -3, -6, 0],
          [0, 0, 0, 0, 0, -1, -5]]
 colors = 6
-# board =[
-# [0,0,0,0,0,0,0,0,0,0],
-# [0,-1,0,0,0,0,0,0,0,0],
-# [0,0,0,0,0,0,-3,-4,0,0],
-# [-2,0,0,-8,-9,0,0,0,0,0],
-# [0,0,0,0,0,0,0,0,0,0],
-# [-7,-8,0,0,-7,0,0,0,0,0],
-# [0,0,-6,0,0,-9,0,-4,-1,0],
-# [0,0,0,0,0,0,0,0,0,0],
-# [0,-5,-10,0,-10,0,0,-5,-3,0],
-# [0,0,0,0,0,0,0,-6,-2,0]]
-# colors = 10
+board =[
+[0,0,0,0,0,0,0,0,0,0],
+[0,-1,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,-3,-4,0,0],
+[-2,0,0,-8,-9,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[-7,-8,0,0,-7,0,0,0,0,0],
+[0,0,-6,0,0,-9,0,-4,-1,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,-5,-10,0,-10,0,0,-5,-3,0],
+[0,0,0,0,0,0,0,-6,-2,0]]
+colors = 10
 board_size = len(board)
 flow = Flow(board, colors)
 evaluator = FlowEvaluator(board_size, colors)
@@ -82,3 +83,4 @@ result = algo.execute()
 solved_board = np.array(result).reshape((board_size, board_size))
 
 print(solved_board)
+draw_board(solved_board)

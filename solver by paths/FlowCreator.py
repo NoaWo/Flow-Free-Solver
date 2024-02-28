@@ -4,7 +4,7 @@ import random
 from eckity.creators.creator import Creator
 from eckity.fitness.simple_fitness import SimpleFitness
 
-from genetic_algorithm.BoardIndividual import BoardIndividual
+from BoardIndividual import BoardIndividual
 
 
 class FlowCreator(Creator):
@@ -41,6 +41,14 @@ class FlowCreator(Creator):
     def generate_path(self, start, end):
         return self.generate_path_static(self.neighbors_in_board, start, end, self.dots)
 
+    def generate_path_with_attempts(self, start, end, attempts=5):
+        for _ in range(attempts):
+            result = self.generate_path_static(self.neighbors_in_board, start, end, self.dots)
+            if result is not None:
+                return result
+        return None
+
+
     @staticmethod
     def generate_path_static(neighbors_in_board, start, end, dots):
         """
@@ -63,12 +71,15 @@ class FlowCreator(Creator):
         curr_cell = start
         while curr_cell != end:
             curr_neighbors = copy.copy(neighbors_in_board[curr_cell])
-            next_cell = random.choice(curr_neighbors)
-            while next_cell in illegal_cells:
-                curr_neighbors.remove(next_cell)
-                if len(curr_neighbors) == 0:
-                    return None
+            if end in curr_neighbors:
+                next_cell = end
+            else:
                 next_cell = random.choice(curr_neighbors)
+                while next_cell in illegal_cells:
+                    curr_neighbors.remove(next_cell)
+                    if len(curr_neighbors) == 0:
+                        return None
+                    next_cell = random.choice(curr_neighbors)
             path.append(next_cell)
             illegal_cells.add(next_cell)
             for neighbor in curr_neighbors:

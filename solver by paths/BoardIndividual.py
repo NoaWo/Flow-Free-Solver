@@ -18,6 +18,7 @@ class BoardIndividual(Individual):
         self.board = [[list() for _ in range(columns)] for _ in range(rows)]
         self.init_board()
         self.has_path = [False for _ in range(self.colors)]
+        self.bad_path = [False for _ in range(self.colors)]
 
     def init_board(self):
         for i, tup in enumerate(self.dots):
@@ -51,8 +52,27 @@ class BoardIndividual(Individual):
     def has_path_of(self, color):
         return self.has_path[color]
 
+    def is_bad_path_of(self, color):
+        return self.bad_path[color]
+
     def set_has_path_of(self, color, boolean):
         self.has_path[color] = boolean
+        # self.bad_path[color] = False
+
+    def set_bad_path_of(self, color, boolean):
+        self.bad_path[color] = boolean
+
+    def get_has_path(self):
+        return copy.copy(self.has_path)
+
+    # def set_has_path(self, new_has_path):
+    #     self.has_path = new_has_path
+
+    def get_bad_path(self):
+        return copy.copy(self.bad_path)
+
+    # def set_bad_path(self, new_bad_path):
+    #     self.bad_path = new_bad_path
 
     def get_colors(self):
         return self.colors
@@ -60,17 +80,24 @@ class BoardIndividual(Individual):
     def add_path(self, path, color):
         for cell in path:
             self.board[cell[0]][cell[1]].append(color)
-        self.has_path[color] = True
+        self.set_has_path_of(color, True)
+        self.set_bad_path_of(color, False)
 
     def get_cell(self, i, j):
         return self.board[i][j]
         # return copy.copy(self.board[i][j])
+
+    def is_dot_cell(self, i, j):
+        return any(col < 0 for col in self.board[i][j])
 
     def set_cell(self, i, j, colors_list):
         self.board[i][j] = colors_list
 
     def get_dots_of(self, color):
         return self.dots[color]
+
+    # def get_dots(self):
+    #     return self.dots
 
     def show(self):
         for row in self.board:
@@ -96,4 +123,4 @@ class BoardIndividual(Individual):
         object
             Vector (genome) of this individual.
         """
-        return self.has_path
+        return self.board, self.has_path, self.bad_path, self.get_pure_fitness()

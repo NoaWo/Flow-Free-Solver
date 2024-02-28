@@ -1,25 +1,6 @@
 import tkinter as tk
-from enum import Enum
-class Color(Enum):
-    BLANK = 0
-    RED = 1
-    BLUE = 2
-    YELLOW = 3
-    GREEN = 4
-    ORANGE = 5
-    PURPLE = 6
-    LIME = 7
-    BROWN = 8
-    TEAL = 9
-    CYAN = 10
 
-    @classmethod
-    def get_color_by_number(cls, number):
-        for color in cls:
-            if color.value == number:
-                return color.name
-        raise ValueError(f"Invalid color number {number}")
-
+from Color import Color
 
 SQUARE_SIZE = 50
 #CANVAS_SIZE = GRID_SIZE * SQUARE_SIZE
@@ -81,6 +62,5 @@ def draw_board(matrix):
                 else:
                     canvas.create_line(x1 + 25, y1, x1 + 25, y2, fill=color_name, width=LINE_WIDTH)
                     canvas.create_line(x1, ((y1 + y2) / 2), x2, ((y1 + y2) / 2), fill=color_name, width=LINE_WIDTH)
-
 
     root.mainloop()
