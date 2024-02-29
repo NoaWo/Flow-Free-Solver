@@ -73,8 +73,9 @@ class FlowNColorsMutation(FailableOperator):
             for color in colors_mutation:
                 for _ in range(self.color_attempts):
                     dots = individual.get_dots_of(color)
-                    new_path = self.generate_path(dots[0], dots[1])
-                    # todo add a check if it is deadend path
+                    new_path = self.generate_path(dots[0], dots[1], color)
+
+                    # todo add a check if it is deadend deadendpath
                     if new_path is None: # or (color, tuple(new_path)) in self.deadend_paths:
                         succeeded = False
                         # continue

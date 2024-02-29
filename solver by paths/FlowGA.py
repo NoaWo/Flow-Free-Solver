@@ -18,33 +18,33 @@ from FlowGUI import draw_board
 board = Board(5, 5, [((0,0),(4,1)), ((0,2),(3,1)), ((0,4),(3,3)), ((1,2),(4,2)), ((1,4),(4,3))])
 board = Board(7, 7, [((0,6),(6,5)), ((1,5),(2,1)), ((1,6),(5,4)), ((3,3),(4,2)), ((3,4),(6,6)),
                                             ((5,5),(4,4))])
-board = Board(10, 10, [((1,1),(6,8)), ((3,0),(9,8)), ((8,8),(2,6)), ((2,7),(6,7)), ((8,1),(8,7)),
-                                           ((9,7),(6,2)), ((5,0),(5,4)), ((5,1),(3,3)), ((3,4),(6,5)), ((8,4),(8,2))])
+# board = Board(10, 10, [((1,1),(6,8)), ((3,0),(9,8)), ((8,8),(2,6)), ((2,7),(6,7)), ((8,1),(8,7)),
+#                                            ((9,7),(6,2)), ((5,0),(5,4)), ((5,1),(3,3)), ((3,4),(6,5)), ((8,4),(8,2))])
 creator = FlowCreator(board.rows, board.columns, board.dots)
 # deadend_paths = set()
 
 algo = SimpleEvolution(
         Subpopulation(creators=creator,
-                      population_size=3000,
+                      population_size=2500,
                       # user-defined fitness evaluation method
                       evaluator=FlowEvaluator(board.rows, board.columns),
                                               #, deadend_paths=deadend_paths),
                       # maximization problem (fitness is sum of values), so higher fitness is better
                       higher_is_better=False,
-                      elitism_rate=1/1000,
+                      elitism_rate=1/1250,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           FlowCrossover(board.rows, board.columns, board.colors, random_partition_size=True,
                                         probability=1, is_smart=True),
                           FlowCrossover(board.rows, board.columns, board.colors, random_partition_size=True,
-                                        probability=0.05, is_smart=False),
+                                        probability=0.005, is_smart=False),
                           # FlowCrossover(board.rows, board.columns, board.colors, random_partition_size=True,
                           #               probability=0.1),
                           FlowNColorsMutation(board.colors, board.rows, board.columns, creator.generate_path_with_attempts,
-                                              n=1, probability=0.4, is_smart=False),
+                                              n=1, probability=0.3, is_smart=False),
                       #, deadend_paths=deadend_paths),
                           FlowNColorsMutation(board.colors, board.rows, board.columns, creator.generate_path_with_attempts,
-                                              n=1, probability=0.1, is_smart=True),
+                                              n=1, probability=0.3, is_smart=True),
                       #, deadend_paths=deadend_paths),
                           # FlowNColorsMutation(board.colors, board.rows, board.columns, creator.generate_path_with_tries,
                           #                     n=3, probability=0.4, is_smart=True),
@@ -60,7 +60,7 @@ algo = SimpleEvolution(
                       ]),
         breeder=SimpleBreeder(),
         max_workers=20,
-        max_generation=600,
+        max_generation=100,
         statistics=BestAverageWorstStatistics(),
         termination_checker=FlowTerminationChecker()
     )

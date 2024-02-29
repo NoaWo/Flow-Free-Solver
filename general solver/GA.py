@@ -13,35 +13,42 @@ from FlowNPointMutation import FlowNPointMutation
 from FlowTerminationChecker import FlowTerminationChecker
 from GUI import draw_board
 
-board = [[-1, 0, -2, 0, -3],
+board1 = [[-1, 0, -2, 0, -3],
          [0, 0, -4, 0, -5],
          [0, 0, 0, 0, 0],
          [0, -2, 0, -3, 0],
          [0, -1, -4, -5, 0]]
-board = [[0, 0, 0, 0, 0, 0, -1],
+colors1 = 5
+
+board2 = [[0, 0, 0, 0, 0, 0, -1],
          [0, 0, 0, 0, 0, -2, -3],
          [0, -2, 0, 0, 0, 0, 0],
          [0, 0, 0, -4, -5, 0, 0],
          [0, 0, -4, 0, -6, 0, 0],
          [0, 0, 0, 0, -3, -6, 0],
          [0, 0, 0, 0, 0, -1, -5]]
-colors = 6
-board =[
-[0,0,0,0,0,0,0,0,0,0],
-[0,-1,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,-3,-4,0,0],
-[-2,0,0,-8,-9,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0],
-[-7,-8,0,0,-7,0,0,0,0,0],
-[0,0,-6,0,0,-9,0,-4,-1,0],
-[0,0,0,0,0,0,0,0,0,0],
-[0,-5,-10,0,-10,0,0,-5,-3,0],
-[0,0,0,0,0,0,0,-6,-2,0]]
-colors = 10
+colors2 = 6
+
+board3 =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, -3, -4, 0, 0],
+        [-2, 0, 0, -8, -9, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [-7, -8, 0, 0, -7, 0, 0, 0, 0, 0],
+        [0, 0, -6, 0, 0, -9, 0, -4, -1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, -5, -10, 0, -10, 0, 0, -5, -3, 0],
+        [0, 0, 0, 0, 0, 0, 0, -6, -2, 0]]
+colors3 = 10
+
+board = board1
+colors = colors1
 board_size = len(board)
+
 flow = Flow(board, colors)
 evaluator = FlowEvaluator(board_size, colors)
 termination_checker = FlowTerminationChecker(board_size)
+
 algo = SimpleEvolution(
         Subpopulation(creators=GAIntVectorCreator(length=board_size * board_size, bounds=(1, colors),
                                                   gene_creator=flow.creator),
@@ -59,7 +66,8 @@ algo = SimpleEvolution(
                           FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size,
                                              colors=colors, evaluator=evaluator, probability=0, n=3, is_smart=False),
                           FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size,
-                                             colors=colors, evaluator=evaluator, probability=0.01, n=colors, is_smart=True),
+                                             colors=colors, evaluator=evaluator, probability=0.01, n=colors,
+                                             is_smart=True),
                           # FlowNPointMutation(board_as_vector=flow.get_board_as_vector(), board_size=board_size,
                           #                   evaluator=evaluator, probability=0.1, n=4, is_smart=True)
                       ],

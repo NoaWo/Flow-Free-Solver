@@ -84,7 +84,6 @@ class FlowEvaluator(SimpleIndividualEvaluator):
             curr_cell = None
         return path_len - 1
 
-
     @staticmethod
     def no_square(board, i, j):
         color = Color.color_of(board[i, j])
@@ -107,7 +106,3 @@ class FlowEvaluator(SimpleIndividualEvaluator):
                         Color.color_of(board[i - 1, j - 1]) == color):
                     return False
         return True
-
-    def is_optimal(self, individual):
-        return self.evaluate_individual(individual) == self._board_size * self._board_size
-        # return self.evaluate_individual(individual) == self._board_size * self._board_size + self._board_size

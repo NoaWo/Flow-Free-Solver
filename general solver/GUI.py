@@ -1,6 +1,6 @@
 import tkinter as tk
-
 from Color import Color
+
 
 SQUARE_SIZE = 50
 #CANVAS_SIZE = GRID_SIZE * SQUARE_SIZE
