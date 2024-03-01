@@ -3,7 +3,7 @@ from basic_solver.Color import Color
 
 
 SQUARE_SIZE = 50
-#CANVAS_SIZE = GRID_SIZE * SQUARE_SIZE
+# CANVAS_SIZE = GRID_SIZE * SQUARE_SIZE
 DISC_RADIUS = 20  # Adjust the radius as needed
 DISC_COLOR = "red"  # Adjust the color as needed
 LINE_COLOR = "blue"  # Adjust the color as needed
