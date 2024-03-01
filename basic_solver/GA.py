@@ -41,8 +41,8 @@ board3 =[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, -6, -2, 0]]
 colors3 = 10
 
-board = board1
-colors = colors1
+board = board2
+colors = colors2
 board_size = len(board)
 
 flow = Flow(board, colors)

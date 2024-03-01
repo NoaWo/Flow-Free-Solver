@@ -30,8 +30,8 @@ class FlowNPointMutation(VectorNPointMutation):
         defected_cells = [i for i in self._valid_cells if
                           self._evaluator.eval_cell(i // self._board_size, i % self._board_size, board) <= 0]
         k = self.n
-        while len(defected_cells) < k and k > 1:
-            k = k - 1
+        if len(defected_cells) < k:
+            k = len(defected_cells)
         return random.sample(defected_cells, k=k)
 
     def success_checker(self, old_vec: Vector, new_vec: Vector) -> bool:
