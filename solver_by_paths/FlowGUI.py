@@ -42,7 +42,22 @@ def draw_board(matrix):
                     canvas.create_oval(center_x - DISC_RADIUS, center_y - DISC_RADIUS,
                                        center_x + DISC_RADIUS, center_y + DISC_RADIUS,
                                        fill=color_name, outline=color_name)
-                    # todo add small line from dot to path
+                    # on the right
+                    if col + 1 < GRID_SIZE and abs(color) in [abs(col) for col in matrix[row][col + 1]]:
+                        canvas.create_line(center_x  + 10, center_y, center_x + 30, center_y, fill=color_name,
+                                   width=LINE_WIDTH)
+                    # on the left
+                    if col - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row][col - 1]]:
+                        canvas.create_line(center_x  - 10, center_y, center_x - 30, center_y, fill=color_name,
+                                   width=LINE_WIDTH)
+                    # above
+                    if row - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row - 1][col]]:
+                        canvas.create_line(center_x, center_y - 10, center_x, center_y - 30, fill=color_name,
+                                               width=LINE_WIDTH)
+                    # below
+                    if row + 1 < GRID_SIZE and abs(color) in [abs(col) for col in matrix[row + 1][col]]:
+                        canvas.create_line(center_x, center_y + 10, center_x, center_y + 30, fill=color_name,
+                                               width=LINE_WIDTH)
                 else:
                     color_name = str(Color.get_color_by_number(color)).lower()
                     # case left is same color and up is same color
