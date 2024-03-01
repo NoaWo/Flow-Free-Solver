@@ -1,5 +1,5 @@
 import tkinter as tk
-from Color import Color
+from basic_solver.Color import Color
 
 
 SQUARE_SIZE = 50

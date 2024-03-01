@@ -14,13 +14,13 @@ class Color(Enum):
     TEAL = 9
     CYAN = 10
 
-    @staticmethod
-    def color_of(num):
-        return abs(num)
-
-    @staticmethod
-    def is_dot(num):
-        return num < 0
+    # @staticmethod
+    # def color_of(num):
+    #     return abs(num)
+    #
+    # @staticmethod
+    # def is_dot(num):
+    #     return num < 0
 
     @classmethod
     def get_color_by_number(cls, number):

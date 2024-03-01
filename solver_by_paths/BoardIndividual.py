@@ -4,7 +4,7 @@ from eckity.individual import Individual
 
 
 class BoardIndividual(Individual):
-    def __init__(self, rows, columns, dots, fitness):
+    def __init__(self, rows, columns, dots, basic_matrix, fixed_cells, fitness):
         """
 
         :param rows:
@@ -15,27 +15,26 @@ class BoardIndividual(Individual):
         super().__init__(fitness)
         self.colors = len(dots)  # colors = {1,...,self._colors-1}
         self.dots = dots
+        self.rows = rows
+        self.columns = columns
         self.board = [[list() for _ in range(columns)] for _ in range(rows)]
+        self.basic_matrix = basic_matrix
+        self.fixed_cells = fixed_cells
         self.init_board()
-        self.has_path = [False for _ in range(self.colors)]
-        self.bad_path = [False for _ in range(self.colors)]
+        self.has_path = [self.dots[color] is True for color in range(self.colors)]
+        self.fixed_colors = [color for color in range(1, self.colors) if self.has_path[color]]
 
     def init_board(self):
-        for i, tup in enumerate(self.dots):
-            if i == 0:  # dummy element
-                continue
-            cell1 = tup[0]
-            r1 = cell1[0]
-            c1 = cell1[1]
-            cell2 = tup[1]
-            r2 = cell2[0]
-            c2 = cell2[1]
-            color = -1 * i  # dot cell
-            self.board[r1][c1].append(color)
-            self.board[r2][c2].append(color)
+        for cell in self.fixed_cells:
+            i = cell[0]
+            j = cell[1]
+            self.board[i][j].append(self.basic_matrix[i][j])
 
     def get_board(self):
         return self.board
+
+    def get_fixed_cells(self):
+        return copy.copy(self.fixed_cells)
 
     @staticmethod
     def init_neighbors(rows, columns):
@@ -52,27 +51,11 @@ class BoardIndividual(Individual):
     def has_path_of(self, color):
         return self.has_path[color]
 
-    def is_bad_path_of(self, color):
-        return self.bad_path[color]
-
     def set_has_path_of(self, color, boolean):
         self.has_path[color] = boolean
-        # self.bad_path[color] = False
-
-    def set_bad_path_of(self, color, boolean):
-        self.bad_path[color] = boolean
 
     def get_has_path(self):
         return copy.copy(self.has_path)
-
-    # def set_has_path(self, new_has_path):
-    #     self.has_path = new_has_path
-
-    def get_bad_path(self):
-        return copy.copy(self.bad_path)
-
-    # def set_bad_path(self, new_bad_path):
-    #     self.bad_path = new_bad_path
 
     def get_colors(self):
         return self.colors
@@ -81,14 +64,29 @@ class BoardIndividual(Individual):
         for cell in path:
             self.board[cell[0]][cell[1]].append(color)
         self.set_has_path_of(color, True)
-        self.set_bad_path_of(color, False)
 
     def get_cell(self, i, j):
         return self.board[i][j]
         # return copy.copy(self.board[i][j])
 
+    def is_in_dots(self, cell):
+        for cells in self.dots:
+            if cells == () or cells is True:
+                continue
+            if cells[0] == cell or cells[1] == cell:
+                return True
+        return False
+
     def is_dot_cell(self, i, j):
-        return any(col < 0 for col in self.board[i][j])
+        return self.is_in_dots((i, j))
+        # return len(self.board[i][j]) == 1 and self.board[i][j][0] < 0 and self.is_in_dots((i, j))
+
+    def is_fixed_cell(self, i, j):
+        cell = (i, j)
+        return cell in self.fixed_cells
+
+    def is_fixed_color(self, color):
+        return color in self.fixed_colors
 
     def set_cell(self, i, j, colors_list):
         self.board[i][j] = colors_list
@@ -100,6 +98,10 @@ class BoardIndividual(Individual):
     #     return self.dots
 
     def show(self):
+        """
+        Displays the fixed board (not the original dots!) # todo fix?
+        :return:
+        """
         for row in self.board:
             for cell in row:
                 print(cell, end=" "),
@@ -123,4 +125,4 @@ class BoardIndividual(Individual):
         object
             Vector (genome) of this individual.
         """
-        return self.board, self.has_path, self.bad_path, self.get_pure_fitness()
+        return self.board, self.has_path, self.get_pure_fitness()

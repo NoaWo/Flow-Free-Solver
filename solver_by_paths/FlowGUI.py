@@ -35,14 +35,14 @@ def draw_board(matrix):
 
             colors = matrix[row][col]
             for color in colors:
-            # color = matrix[row][col]
                 if color < 0:
                     color_name = str(Color.get_color_by_number(-1 * color)).lower()
 
                     # Draw a filled circle (disc) inside the square
                     canvas.create_oval(center_x - DISC_RADIUS, center_y - DISC_RADIUS,
-                                    center_x + DISC_RADIUS, center_y + DISC_RADIUS,
-                                    fill=color_name, outline=color_name)
+                                       center_x + DISC_RADIUS, center_y + DISC_RADIUS,
+                                       fill=color_name, outline=color_name)
+                    # todo add small line from dot to path
                 else:
                     color_name = str(Color.get_color_by_number(color)).lower()
                     # case left is same color and up is same color

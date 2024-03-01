@@ -6,22 +6,13 @@ from BoardIndividual import BoardIndividual
 
 
 class FlowNColorsMutation(FailableOperator):
-    def __init__(self,
-                 colors,
-                 rows,
-                 columns,
-                 generate_path,
-                 # deadend_paths,
-                 n=1,
-                 probability=1.0,
-                 arity=1,
-                 is_smart=False,
-                 color_selector=None,
-                 events=None,
-                 attempts=3):
+    def __init__(self, colors, rows, columns, generate_path, n=1, probability=1.0, arity=1, is_smart=False,
+                 color_selector=None, events=None, attempts=3):
         super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
         self.n = n
-        self.colors = colors
+        self.colors = colors  # colors = {1,...,self._colors-1}
+        if n >= self.colors:
+            raise ValueError("n must be less than number of colors")
         self.rows = rows
         self.columns = columns
         self.generate_path = generate_path
@@ -31,15 +22,17 @@ class FlowNColorsMutation(FailableOperator):
         if is_smart:
             color_selector = self.smart_color_selector
         self.color_selector = color_selector
-        # self.deadend_paths = deadend_paths
         self.color_attempts = attempts
 
     def default_color_selector(self, ind):
-        return random.sample(range(1, self.colors + 1), k=self.n)
+        colors_to_mutate = [color for color in range(1, self.colors) if not ind.is_fixed_color(color)]
+        k = self.n
+        if len(colors_to_mutate) < k:
+            k = len(colors_to_mutate)
+        return random.sample(colors_to_mutate, k=k)
 
     def smart_color_selector(self, ind):
         colors_to_mutate = self.find_collision(ind)
-        # colors_to_mutate = [color for color in range(1, self.colors + 2) if not ind.has_path_of(color) or ind.is_bad_path_of(color)]
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)
@@ -63,11 +56,11 @@ class FlowNColorsMutation(FailableOperator):
             first return value determines if the attempt succeeded
             second return value is the operator result
         """
-        succeeded = True
+        succeeded = False
         for individual in individuals:
             # old_individual = individual.clone()
 
-            # randomly select n colors (without repetitions)
+            # select n colors (without repetitions)
             colors_mutation = self.color_selector(individual)
 
             for color in colors_mutation:
@@ -75,13 +68,9 @@ class FlowNColorsMutation(FailableOperator):
                     dots = individual.get_dots_of(color)
                     new_path = self.generate_path(dots[0], dots[1], color)
 
-                    # todo add a check if it is deadend deadendpath
-                    if new_path is None: # or (color, tuple(new_path)) in self.deadend_paths:
-                        succeeded = False
-                        # continue
-                    else:
-                        self.replace_path(new_path, color, individual)
+                    if new_path is not None:
                         succeeded = True
+                        self.replace_path(new_path, color, individual)
                         break
 
         self.applied_individuals = individuals
@@ -110,17 +99,16 @@ class FlowNColorsMutation(FailableOperator):
                     colors_cell.append(color)
                 individual.set_cell(i, j, colors_cell)
         individual.set_has_path_of(color, True)
-        individual.set_bad_path_of(color, False)
 
     def find_collision(self, individual):
-        collisions = [False for _ in range(self.colors + 1)]
+        collisions = [False for _ in range(self.colors)]
         for i in range(self.rows):
             for j in range(self.columns):
                 colors_cell = individual.get_cell(i, j)
                 if len(colors_cell) > 1:
                     for color in colors_cell:
                         if color < 0:
-                            raise ValueError("Collision in dot cell")
+                            raise ValueError("Collision in fixed cell")
                         collisions[color] = True
-        colors_that_collide = [color for color in range(1, self.colors + 1) if collisions[color]]
+        colors_that_collide = [color for color in range(1, self.colors) if collisions[color]]
         return colors_that_collide
