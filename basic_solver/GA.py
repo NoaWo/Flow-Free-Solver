@@ -13,6 +13,7 @@ from FlowNPointMutation import FlowNPointMutation
 from FlowTerminationChecker import FlowTerminationChecker
 from GUI import draw_board
 
+
 board1 = [[-1, 0, -2, 0, -3],
          [0, 0, -4, 0, -5],
          [0, 0, 0, 0, 0],

@@ -10,6 +10,7 @@ LINE_COLOR = "blue"  # Adjust the color as needed
 LINE_WIDTH = 9  # Adjust the line width as needed
 
 
+# todo fix
 def draw_board(matrix):
     root = tk.Tk()
     root.title("Flow Board")
