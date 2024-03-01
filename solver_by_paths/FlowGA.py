@@ -1,5 +1,3 @@
-import threading
-
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
@@ -17,7 +15,7 @@ from FlowGUI import draw_board
 
 
 class FlowGA:
-    def __init__(self, arc_cons_board, population_size=1500, max_generation=100, elitism_rate=1/1000):
+    def __init__(self, arc_cons_board, population_size=3000, max_generation=100, elitism_rate=1/1000):
         self.arc_board = arc_cons_board
         self.creator = FlowCreator(self.arc_board)
         self.evaluator = FlowEvaluator(self.arc_board.rows, self.arc_board.columns)
@@ -35,8 +33,8 @@ class FlowGA:
                           operators_sequence=[
                               FlowCrossover(self.arc_board.rows, self.arc_board.columns, self.arc_board.colors,
                                             random_partition_size=True, probability=1, is_smart=True),
-                              FlowCrossover(self.arc_board.rows, self.arc_board.columns, self.arc_board.colors,
-                                            random_partition_size=True, probability=0.005, is_smart=False),
+                              # FlowCrossover(self.arc_board.rows, self.arc_board.columns, self.arc_board.colors,
+                              #               random_partition_size=True, probability=0.005, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
                                                   n=1, probability=0.3, is_smart=False),

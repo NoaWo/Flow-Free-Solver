@@ -41,7 +41,8 @@ class ArcConsistency:
                 cell = neighbors[i]
                 self.matrix[cell[0]][cell[1]] = abs(self.matrix[curr_cell[0]][curr_cell[1]])
                 self.queue.append(cell)
-                for neighbor in neighbors:
+                neighbors_of_cell = self.neighbors_dict[cell]
+                for neighbor in neighbors_of_cell:
                     self.queue.append(neighbor)
 
     def has_all_neighbors(self, num, cell):
