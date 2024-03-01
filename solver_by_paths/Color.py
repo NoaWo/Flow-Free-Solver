@@ -13,6 +13,10 @@ class Color(Enum):
     BROWN = 8
     TEAL = 9
     CYAN = 10
+    MAGENTA = 11
+    GRAY = 12
+    PINK = 13
+
 
     # @staticmethod
     # def color_of(num):
