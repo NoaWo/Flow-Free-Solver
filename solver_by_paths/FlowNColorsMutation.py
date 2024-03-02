@@ -7,6 +7,7 @@ from BoardIndividual import BoardIndividual
 
 class FlowNColorsMutation(FailableOperator):
     def __init__(self, colors, rows, columns, generate_path, n=1, probability=1.0, arity=1, is_smart=False,
+                 is_good=False,
                  color_selector=None, events=None, attempts=3):
         super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
         self.n = n
@@ -19,6 +20,8 @@ class FlowNColorsMutation(FailableOperator):
 
         if color_selector is None:
             color_selector = self.default_color_selector
+        if is_good:
+            color_selector = self.good_color_selector
         if is_smart:
             color_selector = self.smart_color_selector
         self.color_selector = color_selector
@@ -26,6 +29,13 @@ class FlowNColorsMutation(FailableOperator):
 
     def default_color_selector(self, ind):
         colors_to_mutate = [color for color in range(1, self.colors) if not ind.is_fixed_color(color)]
+        k = self.n
+        if len(colors_to_mutate) < k:
+            k = len(colors_to_mutate)
+        return random.sample(colors_to_mutate, k=k)
+
+    def good_color_selector(self, ind):
+        colors_to_mutate = [color for color in range(1, self.colors) if not ind.has_path_of(color)]
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)

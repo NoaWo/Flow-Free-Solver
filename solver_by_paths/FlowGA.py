@@ -40,6 +40,9 @@ class FlowGA:
                                                   n=1, probability=0.15, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
+                                                  n=1, probability=0.90, is_good=True),
+                              FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
+                                                  self.creator.generate_path_with_attempts,
                                                   n=1, probability=0.35, is_smart=True),
                           ],
                           selection_methods=[
