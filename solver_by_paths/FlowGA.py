@@ -15,7 +15,7 @@ from FlowGUI import draw_board
 
 
 class FlowGA:
-    def __init__(self, arc_cons_board, population_size=3000, max_generation=100, elitism_rate=1/1000):
+    def __init__(self, arc_cons_board, population_size=500, max_generation=100, elitism_rate=1/1000):
         self.arc_board = arc_cons_board
         self.creator = FlowCreator(self.arc_board)
         self.evaluator = FlowEvaluator(self.arc_board.rows, self.arc_board.columns)
@@ -83,34 +83,7 @@ class FlowGA:
         print("Fitness: " + str(fitness))
         matrix_to_draw = self.get_solved_matrix(board)
         draw_board(matrix_to_draw)
+        if fitness == 0:
+            return True
+        return False
 
-# todo delete
-# results_lock = threading.Lock()
-# results = []
-#
-#
-# def run_genetic_algo():
-#     # evolve the generated initial population
-#     algo.evolve()
-#     # Execute (show) the best solution
-#     board, result, fitness = algo.execute()
-#     results_lock.acquire()
-#     results.append((board, fitness))
-#     results_lock.release()
-#
-#
-# threads = []
-# RUNS = 5
-# for i in range(RUNS):
-#     thread = threading.Thread(target=run_genetic_algo)
-#     threads.append(thread)
-#
-# for thread in threads:
-#     thread.start()
-#
-# for thread in threads:
-#     thread.join()
-#
-# best_index = results.index(min([res[1] for res in results]))
-# best_board = results[best_index][0]
-# draw_board(best_board)
