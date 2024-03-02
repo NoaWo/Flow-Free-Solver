@@ -37,10 +37,10 @@ class FlowGA:
                               #               random_partition_size=True, probability=0.005, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
-                                                  n=1, probability=0.3, is_smart=False),
+                                                  n=1, probability=0.15, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
-                                                  n=1, probability=0.1, is_smart=True),
+                                                  n=1, probability=0.35, is_smart=True),
                           ],
                           selection_methods=[
                               # (selection method, selection probability) tuple
@@ -86,4 +86,3 @@ class FlowGA:
         if fitness == 0:
             return True
         return False
-

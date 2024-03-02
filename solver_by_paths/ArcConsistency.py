@@ -1,3 +1,4 @@
+from basic_solver.GUI import draw_board
 from solver_by_paths.ArcConsistencyBoard import ArcConsistencyBoard
 from solver_by_paths.BoardIndividual import BoardIndividual
 
@@ -6,13 +7,13 @@ class ArcConsistency:
     def __init__(self, board):
         self.board = board
         self.dots = board.dots
-        dummy_tup = ()
-        self.dots.insert(0, dummy_tup)
         self.neighbors_dict = BoardIndividual.init_neighbors(board.rows, board.columns)
         self.matrix = [[0 for _ in range(board.columns)] for _ in range(board.rows)]
         self.queue = []
         self.init_queue()
         self.arc_consistency()
+        # for debug only
+        # draw_board(self.matrix)
 
     def init_queue(self):
         for color, cells in enumerate(self.dots):

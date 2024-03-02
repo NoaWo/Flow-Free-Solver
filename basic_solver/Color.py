@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Color(Enum):
-    WHITE = 0
+    BLANK = 0
     RED = 1
     BLUE = 2
     YELLOW = 3
@@ -13,6 +13,9 @@ class Color(Enum):
     BROWN = 8
     TEAL = 9
     CYAN = 10
+    MAGENTA = 11
+    GRAY = 12
+    PINK = 13
 
     @staticmethod
     def color_of(num):

@@ -60,11 +60,12 @@ class FlowCreator(Creator):
             #     continue
             if not individual.has_path_of(color):  # path is not complete
                 dots = self.new_dots[color]
-                path = self.generate_path(dots[0], dots[1], color)
+                # path = self.generate_path(dots[0], dots[1], color)
+                path = self.generate_path_with_attempts(dots[0], dots[1], color, 2)
                 if path is not None:
                     individual.add_path(path, color)
 
-    def generate_path_with_attempts(self, start, end, color, attempts=5):
+    def generate_path_with_attempts(self, start, end, color, attempts=6):
         for _ in range(attempts):
             result = self.generate_path(start, end, color)
             if result is not None:
@@ -211,6 +212,3 @@ class FlowCreator(Creator):
                 (r, c + 2) in path and (r + 1, c + 2) in path and not self.is_original_dot_cell(r + 1, c + 1)):
                 return True
         return False
-
-        # def add_deadend_path(self, color, path):
-        #     self.deadend_paths.add((color, tuple(path)))

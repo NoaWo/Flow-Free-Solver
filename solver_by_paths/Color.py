@@ -17,7 +17,6 @@ class Color(Enum):
     GRAY = 12
     PINK = 13
 
-
     # @staticmethod
     # def color_of(num):
     #     return abs(num)

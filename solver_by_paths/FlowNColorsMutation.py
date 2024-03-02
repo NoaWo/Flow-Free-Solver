@@ -32,7 +32,8 @@ class FlowNColorsMutation(FailableOperator):
         return random.sample(colors_to_mutate, k=k)
 
     def smart_color_selector(self, ind):
-        colors_to_mutate = self.find_collision(ind)
+        colors_that_collide = self.find_collision(ind)
+        colors_to_mutate = [color for color in colors_that_collide if not ind.is_fixed_color(color)]
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)

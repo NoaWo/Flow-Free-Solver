@@ -14,7 +14,10 @@ plus_line_w = LINE_WIDTH / 2
 outline_w = 1
 
 
-def draw_board(matrix):
+def draw_board(matrix, is_init=False):
+    if is_init:
+        new_matrix = [[[element] for element in row] for row in matrix]
+        matrix = new_matrix
     root = tk.Tk()
     root.title("Flow Board")
     GRID_SIZE = len(matrix)
@@ -28,7 +31,7 @@ def draw_board(matrix):
             x2, y2 = x1 + SQUARE_SIZE, y1 + SQUARE_SIZE
 
             # Draw the square with light yellow borders
-            canvas.create_rectangle(x1, y1, x2, y2, outline="lightyellow", width=1)
+            canvas.create_rectangle(x1, y1, x2, y2, outline="lightyellow", width=outline_w)
 
             # Calculate the center of the square
             center_x, center_y = (x1 + x2) / 2, (y1 + y2) / 2
@@ -42,38 +45,44 @@ def draw_board(matrix):
                     canvas.create_oval(center_x - DISC_RADIUS, center_y - DISC_RADIUS,
                                        center_x + DISC_RADIUS, center_y + DISC_RADIUS,
                                        fill=color_name, outline=color_name)
+                    # start of path
                     # on the right
                     if col + 1 < GRID_SIZE and abs(color) in [abs(col) for col in matrix[row][col + 1]]:
-                        canvas.create_line(center_x  + 10, center_y, center_x + 30, center_y, fill=color_name,
-                                   width=LINE_WIDTH)
+                        canvas.create_line(center_x + 10, center_y, center_x + 30, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
                     # on the left
-                    if col - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row][col - 1]]:
-                        canvas.create_line(center_x  - 10, center_y, center_x - 30, center_y, fill=color_name,
-                                   width=LINE_WIDTH)
+                    elif col - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row][col - 1]]:
+                        canvas.create_line(center_x - 10, center_y, center_x - 30, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
                     # above
-                    if row - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row - 1][col]]:
+                    elif row - 1 >= 0 and abs(color) in [abs(col) for col in matrix[row - 1][col]]:
                         canvas.create_line(center_x, center_y - 10, center_x, center_y - 30, fill=color_name,
-                                               width=LINE_WIDTH)
+                                           width=LINE_WIDTH)
                     # below
-                    if row + 1 < GRID_SIZE and abs(color) in [abs(col) for col in matrix[row + 1][col]]:
+                    elif row + 1 < GRID_SIZE and abs(color) in [abs(col) for col in matrix[row + 1][col]]:
                         canvas.create_line(center_x, center_y + 10, center_x, center_y + 30, fill=color_name,
-                                               width=LINE_WIDTH)
-                else:
+                                           width=LINE_WIDTH)
+
+                elif color > 0:
                     color_name = str(Color.get_color_by_number(color)).lower()
                     # case left is same color and up is same color
                     if (row - 1 >= 0 and
                             color in [abs(col) for col in matrix[row - 1][col]] and
                             col - 1 >= 0 and
                             color in [abs(col) for col in matrix[row][col - 1]]):
-                        canvas.create_line(x1, center_y, center_x + plus_line_w, center_y, fill=color_name, width=LINE_WIDTH)
-                        canvas.create_line(center_x, center_y + plus_line_w, center_x, y1, fill=color_name, width=LINE_WIDTH)
+                        canvas.create_line(x1, center_y, center_x + plus_line_w, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
+                        canvas.create_line(center_x, center_y + plus_line_w, center_x, y1, fill=color_name,
+                                           width=LINE_WIDTH)
                     # case left is same color and down is same color
                     elif (row + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row + 1][col]] and
                           col - 1 >= 0 and
                           color in [abs(col) for col in matrix[row][col - 1]]):
-                        canvas.create_line(x1, center_y, center_x + plus_line_w, center_y, fill=color_name, width=LINE_WIDTH)
-                        canvas.create_line(center_x, center_y - plus_line_w, center_x, y2, fill=color_name, width=LINE_WIDTH)
+                        canvas.create_line(x1, center_y, center_x + plus_line_w, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
+                        canvas.create_line(center_x, center_y - plus_line_w, center_x, y2, fill=color_name,
+                                           width=LINE_WIDTH)
                     # case left is same color and right is same color
                     elif (col + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row][col + 1]] and
@@ -85,15 +94,19 @@ def draw_board(matrix):
                           color in [abs(col) for col in matrix[row-1][col]] and
                           col + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row][col+1]]):
-                        canvas.create_line(x2, center_y, center_x - plus_line_w, center_y, fill=color_name, width=LINE_WIDTH)
-                        canvas.create_line(center_x, y1, center_x, center_y + plus_line_w, fill=color_name, width=LINE_WIDTH)
+                        canvas.create_line(x2, center_y, center_x - plus_line_w, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
+                        canvas.create_line(center_x, y1, center_x, center_y + plus_line_w, fill=color_name,
+                                           width=LINE_WIDTH)
                     # case right is same color and down is same color
                     elif (row + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row + 1][col]] and
                           col + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row][col + 1]]):
-                        canvas.create_line(center_x - plus_line_w, center_y, x2, center_y, fill=color_name, width=LINE_WIDTH)
-                        canvas.create_line(center_x, y2, center_x, center_y - plus_line_w, fill=color_name, width=LINE_WIDTH)
+                        canvas.create_line(center_x - plus_line_w, center_y, x2, center_y, fill=color_name,
+                                           width=LINE_WIDTH)
+                        canvas.create_line(center_x, y2, center_x, center_y - plus_line_w, fill=color_name,
+                                           width=LINE_WIDTH)
                     # case down is same color and up is same color
                     elif (row + 1 < GRID_SIZE and
                           color in [abs(col) for col in matrix[row + 1][col]] and
