@@ -54,7 +54,7 @@ def draw_board(matrix):
                     canvas.create_line(center_x, center_y - 10, center_x, center_y - 30, fill=color_name,
                                        width=LINE_WIDTH)
                 # below
-                if row + 1 < GRID_SIZE and abs(color) == abs(matrix[row + 1][col]):
+                elif row + 1 < GRID_SIZE and abs(color) == abs(matrix[row + 1][col]):
                     canvas.create_line(center_x, center_y + 10, center_x, center_y + 30, fill=color_name,
                                        width=LINE_WIDTH)
 
