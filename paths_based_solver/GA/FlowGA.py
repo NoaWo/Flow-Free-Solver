@@ -1,17 +1,15 @@
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 
-from Board import Board
-from FlowCreator import FlowCreator
-from FlowCrossover import FlowCrossover
-from FlowEvaluator import FlowEvaluator
-from FlowNColorsMutation import FlowNColorsMutation
-from FlowTerminationChecker import FlowTerminationChecker
-from FlowGUI import draw_board
+from paths_based_solver.GA.FlowCreator import FlowCreator
+from paths_based_solver.GA.FlowCrossover import FlowCrossover
+from paths_based_solver.GA.FlowEvaluator import FlowEvaluator
+from paths_based_solver.GA.FlowNColorsMutation import FlowNColorsMutation
+from paths_based_solver.GA.FlowTerminationChecker import FlowTerminationChecker
+from paths_based_solver.gui.FlowGUI import draw_board
 
 
 class FlowGA:

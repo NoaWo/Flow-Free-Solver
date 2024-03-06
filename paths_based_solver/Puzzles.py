@@ -1,4 +1,4 @@
-from paths_based_solver.Board import Board
+from paths_based_solver.boards.Board import Board
 
 
 board_5_1 = Board(5, 5,

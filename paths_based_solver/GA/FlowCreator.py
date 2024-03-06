@@ -4,7 +4,7 @@ import random
 from eckity.creators.creator import Creator
 from eckity.fitness.simple_fitness import SimpleFitness
 
-from BoardIndividual import BoardIndividual
+from paths_based_solver.GA.BoardIndividual import BoardIndividual
 
 
 class FlowCreator(Creator):

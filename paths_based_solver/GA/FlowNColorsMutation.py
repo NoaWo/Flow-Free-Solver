@@ -2,7 +2,7 @@ import random
 
 from eckity.genetic_operators.failable_operator import FailableOperator
 
-from BoardIndividual import BoardIndividual
+from paths_based_solver.GA.BoardIndividual import BoardIndividual
 
 
 class FlowNColorsMutation(FailableOperator):

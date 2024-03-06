@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from Color import Color
+from paths_based_solver.gui.Color import Color
 
 
 SQUARE_SIZE = 50

@@ -1,7 +1,7 @@
 import math
 
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
-from BoardIndividual import BoardIndividual
+from paths_based_solver.GA.BoardIndividual import BoardIndividual
 
 
 class FlowEvaluator(SimpleIndividualEvaluator):
