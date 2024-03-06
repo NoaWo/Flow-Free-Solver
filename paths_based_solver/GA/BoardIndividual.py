@@ -99,7 +99,7 @@ class BoardIndividual(Individual):
 
     def show(self):
         """
-        Displays the fixed board (not the original dots!) # todo fix?
+        Displays the fixed board (not the original dots!)
         :return:
         """
         for row in self.board:

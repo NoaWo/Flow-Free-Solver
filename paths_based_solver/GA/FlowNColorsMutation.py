@@ -88,7 +88,7 @@ class FlowNColorsMutation(FailableOperator):
         return True, individuals
         # return succeeded, individuals
 
-    def on_fail(self, payload):  # todo
+    def on_fail(self, payload):
         """
         The required fix when the operator fails, does nothing by default and can be overridden by subclasses
 
