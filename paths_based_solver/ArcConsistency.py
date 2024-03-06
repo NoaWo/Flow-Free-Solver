@@ -1,6 +1,6 @@
 from basic_solver.GUI import draw_board
-from solver_by_paths.ArcConsistencyBoard import ArcConsistencyBoard
-from solver_by_paths.BoardIndividual import BoardIndividual
+from paths_based_solver.ArcConsistencyBoard import ArcConsistencyBoard
+from paths_based_solver.BoardIndividual import BoardIndividual
 
 
 class ArcConsistency:

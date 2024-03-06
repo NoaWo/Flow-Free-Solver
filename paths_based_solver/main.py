@@ -1,8 +1,8 @@
 import copy
 
-from solver_by_paths.ArcConsistency import ArcConsistency
-from solver_by_paths.FlowGA import FlowGA
-from solver_by_paths.FlowGUI import draw_board
+from paths_based_solver.ArcConsistency import ArcConsistency
+from paths_based_solver.FlowGA import FlowGA
+from paths_based_solver.FlowGUI import draw_board
 from Puzzles import boards
 import random
 
