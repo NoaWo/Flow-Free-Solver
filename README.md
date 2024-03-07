@@ -156,7 +156,7 @@ We found out that for small puzzles, Arc Consistency itself solves the puzzles:
 <img align="center" width="353" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/ed6e7c08-4b2f-4b51-b569-e90891209164" /> 
 </p>
 
-And for lots of the big puzzles it achives a really good results:
+And for lots of the big puzzles it achives really good results:
 <p float="center" align="center">
 <img align="center" width="451" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/31a51169-6187-4553-bc31-5faeaa436074" />
 &emsp; 
