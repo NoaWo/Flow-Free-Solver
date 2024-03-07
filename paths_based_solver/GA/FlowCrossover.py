@@ -6,6 +6,7 @@ from eckity.genetic_operators.genetic_operator import GeneticOperator
 class FlowCrossover(GeneticOperator):
     def __init__(self, rows, columns, colors, random_partition_size=False,
                  probability=1, arity=2, events=None, is_smart=False):
+        self.sys_random = random.SystemRandom()
         self.individuals = None
         self.applied_individuals = None
         self.colors = colors  # colors = {1,...,self._colors-1}
@@ -61,11 +62,11 @@ class FlowCrossover(GeneticOperator):
 
     def random_partition(self):
         colors = [i for i in range(1, self.colors)]
-        random.shuffle(colors)
+        self.sys_random.shuffle(colors)
 
         partition_size = len(colors) // 2
         if self.random_partition_size:
-            partition_size = random.randint(1, self.colors - 2)
+            partition_size = self.sys_random.randint(1, self.colors - 2)
 
         partition_1 = colors[:partition_size]
         partition_2 = colors[partition_size:]
@@ -92,7 +93,7 @@ class FlowCrossover(GeneticOperator):
         colors = [i for i in range(1, self.colors)]
         for color in colors:
             if i1.has_path_of(color) and i2.has_path_of(color):
-                coin = random.randint(1, 2)
+                coin = self.sys_random.randint(1, 2)
                 if coin == 1:
                     partition1.append(color)
                 if coin == 2:
@@ -102,7 +103,7 @@ class FlowCrossover(GeneticOperator):
             elif i2.has_path_of(color):
                 partition2.append(color)
             else:
-                coin = random.randint(1, 2)
+                coin = self.sys_random.randint(1, 2)
                 if coin == 1:
                     partition1.append(color)
                 if coin == 2:

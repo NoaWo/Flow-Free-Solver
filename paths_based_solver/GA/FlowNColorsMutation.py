@@ -10,6 +10,7 @@ class FlowNColorsMutation(FailableOperator):
                  is_good=False,
                  color_selector=None, events=None, attempts=3):
         super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
+        self.sys_random = random.SystemRandom()
         self.n = n
         self.colors = colors  # colors = {1,...,self._colors-1}
         if n >= self.colors:
@@ -32,14 +33,14 @@ class FlowNColorsMutation(FailableOperator):
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)
-        return random.sample(colors_to_mutate, k=k)
+        return self.sys_random.sample(colors_to_mutate, k=k)
 
     def good_color_selector(self, ind):
         colors_to_mutate = [color for color in range(1, self.colors) if not ind.has_path_of(color)]
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)
-        return random.sample(colors_to_mutate, k=k)
+        return self.sys_random.sample(colors_to_mutate, k=k)
 
     def smart_color_selector(self, ind):
         colors_that_collide = self.find_collision(ind)
@@ -47,7 +48,7 @@ class FlowNColorsMutation(FailableOperator):
         k = self.n
         if len(colors_to_mutate) < k:
             k = len(colors_to_mutate)
-        return random.sample(colors_to_mutate, k=k)
+        return self.sys_random.sample(colors_to_mutate, k=k)
 
     def attempt_operator(self, individuals, attempt_num):
         """
