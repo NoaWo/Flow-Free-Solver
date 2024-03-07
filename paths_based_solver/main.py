@@ -37,15 +37,20 @@ def main():
         else:
             cont = True
             while cont:
+                print("Population: " + str(pop))
+                print("Generations: " + str(gens))
                 ga = FlowGA(copy.deepcopy(new_board), pop, gens)
                 is_solved = ga.run()
                 if is_solved:
                     print(f'\nPuzzle solved with population: {pop} and generations: {gens}')
                     cont = False
                 if not is_solved:
-                    cont = input('try with more resources? press y for yes: ') == 'y'
-                pop += pop_inc
-                gens += gens_inc
+                    cont = input('Try again? press y for try with more population and generations, '
+                                 'press c for try again same as before, press n for not try again: ')
+                if cont == 'y':
+                    pop += pop_inc
+                    gens += gens_inc
+                cont = cont == 'y' or cont == 'c'
 
 
 if __name__ == "__main__":
