@@ -44,13 +44,13 @@ def main():
                 if is_solved:
                     print(f'\nPuzzle solved with population: {pop} and generations: {gens}')
                     cont = False
-                if not is_solved:
+                else:
                     cont = input('Try again? press y for try with more population and generations, '
                                  'press c for try again same as before, press n for not try again: ')
-                if cont == 'y':
-                    pop += pop_inc
-                    gens += gens_inc
-                cont = cont == 'y' or cont == 'c'
+                    if cont == 'y':
+                        pop += pop_inc
+                        gens += gens_inc
+                    cont = cont == 'y' or cont == 'c'
 
 
 if __name__ == "__main__":
