@@ -2,7 +2,7 @@
 Written by Shahar Bar and Noa Wolfgor
 
 ## Flow Free Game
-Flow Free is a simple yet addictive puzzle game.
+Flow Free is a simple puzzle game.
 
 Each puzzle is a grid contains 2 dots of each color. There are puzzles in a variety of sizes.
 
@@ -189,6 +189,6 @@ With population=2000 and generations=75 we get:<br>
 Fitness: 8<br>
 <img width="550" alt="Screenshot 2024-03-07 at 2 32 58" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/3aba2a09-111b-4ea6-90d1-1350d41a3700">
 
-With population=7000 and generations=200 we get (after a long run):<br>
-Fitness: 4<br>
-<img width="549" alt="Screenshot 2024-03-07 at 2 58 23" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/7c96b5b8-e2b8-48e2-b0f7-121bb3af7801">
+With population=4000 and generations=125 (after 3 times run) we get:<br>
+Fitness: 2<br>
+<img width="552" alt="Screenshot 2024-03-07 at 10 59 42" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/effaaa3d-f232-40c6-87a6-1867aac7c9d5">
