@@ -1,13 +1,14 @@
 import copy
+import random
 
 from paths_based_solver.arc_consistency.ArcConsistency import ArcConsistency
 from paths_based_solver.GA.FlowGA import FlowGA
 from paths_based_solver.gui.FlowGUI import draw_board
 from Puzzles import boards
-import random
 
 
 def main():
+    sys_random = random.SystemRandom()
     while True:
         size = input('Choose size of puzzle (type a number between 5 and 12 or q for quit): ')
         while size not in ['5', '6', '7', '8', '9', '10', '11', '12', 'q']:
@@ -21,7 +22,7 @@ def main():
         pop_inc = int(pop)
         gens_inc = int(gens * 0.5)
         print('Choose random puzzle of size ' + str(size) + 'x' + str(size) + '...')
-        input_board = random.choice(board_options)
+        input_board = sys_random.choice(board_options)
         print('Puzzle selected.')
         draw_board(input_board.get_matrix())
         print('Solve...')
@@ -36,15 +37,20 @@ def main():
         else:
             cont = True
             while cont:
+                print("Population: " + str(pop))
+                print("Generations: " + str(gens))
                 ga = FlowGA(copy.deepcopy(new_board), pop, gens)
                 is_solved = ga.run()
                 if is_solved:
                     print(f'\nPuzzle solved with population: {pop} and generations: {gens}')
                     cont = False
-                if not is_solved:
-                    cont = input('try with more resources? enter y for yes: ') == 'y'
-                pop += pop_inc
-                gens += gens_inc
+                else:
+                    cont = input('Try again? press y for try with more population and generations, '
+                                 'press c for try again same as before, press n for not try again: ')
+                    if cont == 'y':
+                        pop += pop_inc
+                        gens += gens_inc
+                    cont = cont == 'y' or cont == 'c'
 
 
 if __name__ == "__main__":

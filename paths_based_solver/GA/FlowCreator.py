@@ -12,6 +12,7 @@ class FlowCreator(Creator):
         if events is None:
             events = ["after_creation"]
         super().__init__(events, fitness_type)
+        self.sys_random = random.SystemRandom()
         self.colors = arc_board.colors  # colors = {1,...,self._colors-1}
         self.rows = arc_board.rows
         self.columns = arc_board.columns
@@ -89,12 +90,12 @@ class FlowCreator(Creator):
             if end in curr_neighbors:  # optimization for not deadend path
                 next_cell = end
             else:
-                next_cell = random.choice(curr_neighbors)
+                next_cell = self.sys_random.choice(curr_neighbors)
                 while next_cell in illegal_cells:
                     curr_neighbors.remove(next_cell)
                     if len(curr_neighbors) == 0:
                         return None
-                    next_cell = random.choice(curr_neighbors)
+                    next_cell = self.sys_random.choice(curr_neighbors)
             path.append(next_cell)
             illegal_cells.add(next_cell)
             for neighbor in curr_neighbors:

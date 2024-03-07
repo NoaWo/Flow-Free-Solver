@@ -1,3 +1,5 @@
+from time import time
+
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
@@ -52,7 +54,8 @@ class FlowGA:
             max_workers=20,
             max_generation=self.max_generation,
             statistics=BestAverageWorstStatistics(),
-            termination_checker=self.termination_checker
+            termination_checker=self.termination_checker,
+            random_seed=time()
         )
 
     def get_solved_matrix(self, board):
