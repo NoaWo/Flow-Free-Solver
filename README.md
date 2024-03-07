@@ -165,7 +165,7 @@ And for lots of the big puzzles it achives really good results:
 
 ## Our Flow Free Solver
 
-After run Arc Consistency first, we have more constrained space of the problem, i.e. problem space is reduced. We defiend a constrained version of the problem, with fixed cells (that determined in Arc Consistency). On that constrained version of the problem, we run the Paths Based Solver and get great solutions!
+We run Arc Consistency first, get more constrained space of the problem, i.e. problem space is reduced. Then we define a constrained version of the problem, with fixed cells (which determined in Arc Consistency). On that constrained version of the problem, we run the Paths Based Solver and get great solutions!
 
 <p float="center" align="center">
 <img align="center" width="501" alt="Screenshot 2024-03-07 at 1 28 56" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/6a06ee21-d123-468a-adb8-9f2c3d35e9db">
