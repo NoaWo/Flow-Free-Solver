@@ -98,7 +98,7 @@ That solver worked better, but it still needed too large population and too many
 
 We have implemented some optimizations.
 
-### Optimization: Legal Paths and DeadEnd Checks
+### Legal Paths and DeadEnd Checks
 
 We optimized the randomly generate path function in two aspects:
 
@@ -122,7 +122,7 @@ We optimized the randomly generate path function in two aspects:
       The bottom left corner cells are blocked. &emsp;  &emsp; &emsp;  &emsp; &emsp;  
       The single cell which surrounded by the blue path is blocked.
 
-### Optimization: Smart Crossover and Smart Mutation
+### Smart Crossover and Smart Mutation
 
 Since generate path can fail, there are individuals which has no path of some colors. We implemented smart version of crossover and mutation operator:
 - **Smart Crossover** - For each color, if only one of the parents has a path of that color, it determined that this color will be taken from that parent. else it choose randomly one of the parents.
