@@ -42,7 +42,7 @@ def main():
                     print(f'\nPuzzle solved with population: {pop} and generations: {gens}')
                     cont = False
                 if not is_solved:
-                    cont = input('try with more resources? enter y for yes: ') == 'y'
+                    cont = input('try with more resources? press y for yes: ') == 'y'
                 pop += pop_inc
                 gens += gens_inc
 
