@@ -179,7 +179,9 @@ We tried to run our solver on hard puzzles (size > 10).
 <img width="547" alt="Screenshot 2024-03-07 at 2 30 14" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/6aa9c998-fa7e-4f27-8964-43563f219fb7">
 </p>
 
-Results:
+## Finalized Code Structure:
+
+## Results:
 
 With population=1000 and generations=50 we get:<br>
 Fitness: 22<br>
@@ -192,3 +194,9 @@ Fitness: 8<br>
 With population=4000 and generations=125 (after 3 times run) we get:<br>
 Fitness: 2<br>
 <img width="552" alt="Screenshot 2024-03-07 at 10 59 42" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/effaaa3d-f232-40c6-87a6-1867aac7c9d5">
+
+## Conclusions:
+
+blablabla
+
+
