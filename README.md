@@ -33,7 +33,7 @@ The variables are the free cells in the grid (i.e. cells which not contain a col
 
 We combined this idea with genetic algorithm in order to solve the problem.
 
-## Genetic Algorithms (GA)
+## Genetic Algorithm (GA)
 
 The genetic algorithm is a method for solving both constrained and unconstrained optimization problems that is based on natural selection, the process that drives biological evolution.
 
