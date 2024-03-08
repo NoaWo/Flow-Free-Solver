@@ -37,7 +37,7 @@ We combined this idea with genetic algorithm in order to solve the problem.
 
 The genetic algorithm is a method for solving both constrained and unconstrained optimization problems that is based on natural selection, the process that drives biological evolution.
 
-The base of natural selection is that "The strong survives". So, taking this idea to the programming world, if we take a (random) population of possible solutions, run on them a program which mimics the proccess of evolution and reapet it lots of times (generations), we probably get the best (strongest) solution.
+The base idea of natural selection is that "The strong survives". So, taking this idea to the programming world, if we take a (random) population of possible solutions, run on them a program which mimics the proccess of evolution and reapet it lots of times (generations), we probably get the best (strongest) solution.
 
 Proccess of evolution includes
 - **selection** (who has survived from the last generation),
