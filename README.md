@@ -269,7 +269,7 @@ We examine the best fitness achieved by using different population sizes, with d
 <ins>Puzzles of size > 10:</ins> Usually did not converge with many generations and large population, but one can see an improvment in the best fitness as
  the population size grows. For example: puzzle size 12x12: with population 1000: after 1000 generations it achieved fitness 24. with population 2000: after 1000 generations it achieved fitness 20. 
 
-### Takeaways
+### Conclusions
 
 - Population size has the greatest effect on convergence! With big enough population the convergence is relatively fast, while with a small population it usually does not converge to solution, even with much many generations.<br> This phenomenon occurs because the convergence of the algorithm is highly dependent on the initial random population, from which the individuals keep getting better and better and converge to a better solution. If the population is small, there are much less random paths that generated in the initial step. As a result, we miss a lot of possible paths. In this situation, even the convergence of all individuals to a best individual will not achieve a complete solution. <br>(Note that although the mutation operator generates new paths as well, it happens on a much smaller scale than in the initial step).
 
@@ -278,3 +278,8 @@ We examine the best fitness achieved by using different population sizes, with d
 - In practice: The population size is defined to be 500 for puzzles of size < 10 and 1000 for size >= 10. There is an option to enlarge that and try again if the algorithm did not converge to a solution. The number of generations is defined to be 200 for puzzles of size < 10 and 500 for size >= 10, and it grows with the population size.
 
 - Arc Consistency works very well of some puzzles! For example, it can reduce the problem space of a puzzle of size 9 or 10 to be as a puzzle of size 6 or 7. As a result, we need much less population and generations for those puzzles even though they are big puzzles, and the run takes much less time. This is a big improvement!
+
+## How to Run
+
+- Install python packages: tkinter, eckity, matplotlib. You can use pip install.
+- Run main.py
