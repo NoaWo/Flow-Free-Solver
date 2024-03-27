@@ -24,6 +24,7 @@ def main():
         print('Choose random puzzle of size ' + str(size) + 'x' + str(size) + '...')
         input_board = sys_random.choice(board_options)
         print('Puzzle selected.')
+        print('Quit the puzzle window for starting solve.')
         draw_board(input_board.get_matrix())
         print('Solve...')
         board = input_board

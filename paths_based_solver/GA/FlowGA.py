@@ -10,6 +10,7 @@ from paths_based_solver.GA.FlowCreator import FlowCreator
 from paths_based_solver.GA.FlowCrossover import FlowCrossover
 from paths_based_solver.GA.FlowEvaluator import FlowEvaluator
 from paths_based_solver.GA.FlowNColorsMutation import FlowNColorsMutation
+from paths_based_solver.GA.FlowStatistics import FlowStatistics
 from paths_based_solver.GA.FlowTerminationChecker import FlowTerminationChecker
 from paths_based_solver.gui.FlowGUI import draw_board
 
@@ -53,7 +54,7 @@ class FlowGA:
             breeder=SimpleBreeder(),
             max_workers=20,
             max_generation=self.max_generation,
-            statistics=BestAverageWorstStatistics(),
+            statistics=FlowStatistics(),
             termination_checker=self.termination_checker,
             random_seed=time()
         )
