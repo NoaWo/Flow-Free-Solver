@@ -41,7 +41,7 @@ def main():
                 print("Population: " + str(pop))
                 print("Generations: " + str(gens))
                 ga = FlowGA(copy.deepcopy(new_board), pop, gens)
-                is_solved = ga.run()
+                is_solved, stats = ga.run()
                 if is_solved:
                     print(f'\nPuzzle solved with population: {pop} and generations: {gens}')
                     cont = False

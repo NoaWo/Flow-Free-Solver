@@ -24,6 +24,7 @@ class FlowGA:
         self.population_size = population_size
         self.max_generation = max_generation
         self.elitism_rate = elitism_rate
+        self.flow_statistics = FlowStatistics()
         self.algo = SimpleEvolution(
             Subpopulation(creators=self.creator,
                           population_size=self.population_size,
@@ -54,7 +55,7 @@ class FlowGA:
             breeder=SimpleBreeder(),
             max_workers=20,
             max_generation=self.max_generation,
-            statistics=FlowStatistics(),
+            statistics=self.flow_statistics,
             termination_checker=self.termination_checker,
             random_seed=time()
         )
@@ -87,7 +88,8 @@ class FlowGA:
         print(result)
         print("Fitness: " + str(fitness))
         matrix_to_draw = self.get_solved_matrix(board)
+        stats = self.flow_statistics.get_statistics()
         draw_board(matrix_to_draw)
         if fitness == 0:
-            return True
-        return False
+            return True, stats
+        return False, stats
