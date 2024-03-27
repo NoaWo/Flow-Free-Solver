@@ -256,13 +256,13 @@ We examine the best fitness achieved by using different population sizes, with d
 
 ![Screenshot 2024-03-27 at 23 06 04](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/05070533-7359-4c8c-aa89-0afb40e42541)
 
-![Screenshot 2024-03-27 at 23 26 13](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/30492efe-de39-4120-9721-b5b8d22f0f9b)
-
 ![Screenshot 2024-03-27 at 23 08 21](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/ed3facd8-60be-44c3-8dda-1784df489e87)
 
 <ins>Puzzles of size 10x10:</ins>
 
 ![Screenshot 2024-03-27 at 23 57 40](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/480b45a9-a503-4561-9c4e-341357c78b12)
+
+![Screenshot 2024-03-28 at 0 15 12](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/12314f84-d2e8-49c6-8c0a-8b1391cc7ddf)
 
 ![Screenshot 2024-03-28 at 0 23 16](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/e710e322-a11c-46cf-bb21-61b5addcf1e3)
 
