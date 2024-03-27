@@ -1,5 +1,5 @@
 # Flow Free Solver
-Written by Shahar Bar and Noa Wolfgor
+Shahar Bar and Noa Wolfgor
 
 ## Flow Free Game
 Flow Free is a simple puzzle game.
@@ -22,12 +22,16 @@ To solve the puzzle, one needs to pair all colors, and cover the entire board, w
   <img align="center" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/f14e538f-6224-4f36-93c3-92c0e0959237" width="401" /> 
 </p>
 
+In our project we built a solver to Flow Free puzzles. We used genetic algorithm and some more AI ideas.
+
 ## Framing the Problem
+
+Our goal is to solve the Flow Free puzzle.
 
 A simple AI-perspective way to frame the Flow Free puzzle is as a **Constraint Satisfaction Problem** (CSP).
 
 The variables are the free cells in the grid (i.e. cells which not contain a color dot). The domain of each variable is the all colors (can add a "blank" value for no color). The constraints are:
-1. Each cell must be filled by exactly one color.
+1. Each cell must be filled by exactly one color (not "blank").
 2. Each dot cell must has exactly one adjacent cell in the same color.
 3. Each cell which is not a dot cell must has exactly two adjacent cells in the same color.
 
@@ -40,7 +44,7 @@ The genetic algorithm is a method for solving both constrained and unconstrained
 The base idea of natural selection is that "The strong survives". So, taking this idea to the programming world, if we take a (random) population of possible solutions, run on them a program which mimics the proccess of evolution and reapet it lots of times (generations), we probably get the best (strongest) solution.
 
 Proccess of evolution includes
-- **selection** (who has survived from the last generation),
+- **selection** (who has survived from the previous generation),
 - **crossover** (a child gets genes from both parents),
 - **mutation** (sometimes with low probability a gene is changed).
 
@@ -52,13 +56,13 @@ In GA we need to define each of those operators, as well as
 
 We used genetic algorithm based on the CSP described above:
 
-Representing of a solution: each cell (variable) contains exactly one color (value). 
+<ins>Representing of an individual (solution)</ins>: each cell of the grid (variable) contains exactly one color (value). 
 
-- initial population - each individual is a grid where each cell (which is not a dot cell) contains one random color.
-- selection - tournament selection - the best is chosen from a small group of individuals.
-- crossover - k-points crossover, i.e. swaps some (randomly chosen) cells among a pair of parents.
-- mutation - n-points mutation, i.e. randomly change the color (value) of a n cells (randomly chosen).
-- fitness evaluator - fitness of individual (grid) is defined to be the sum of fitness of each cell. fitness of cell is defined binary: 1 if the cell satisfied the constraints (dot cell -> exactly one adjacent cell in the same color, other cell -> two adjacent cells in the same color), else 0. That is, the maximum (and best) fitness is the size (number of cells) of the puzzle.
+- <ins>initial population</ins> - each individual is a grid where each cell (which is not a dot cell) contains one random color. (dot cells remain as is in every individual and every generation).
+- <ins>selection</ins> - tournament selection - the best is chosen from a small group of individuals.
+- <ins>crossover</ins> - k-points crossover, i.e. swaps some (randomly chosen) cells among a pair of parents.
+- <ins>mutation</ins> - n-points mutation, i.e. randomly change the color (value) of some (randomly chosen) n cells.
+- <ins>fitness evaluator</ins> - fitness of individual (grid) is defined to be the sum of fitness of each cell. <br>fitness of cell is defined binary: 1 if the cell satisfied the constraints (dot cell -> exactly one adjacent cell in the same color, other cell -> two adjacent cells in the same color), else 0. <br>That is, the maximum and best fitness is the size (number of cells) of the puzzle.
 
 We found out that this solver solves well small puzzles, but gets troubled with bigger ones, even with a large population and many generations:
 
@@ -75,22 +79,22 @@ This happens since the fitness evaluator gives more points for long paths, even 
 In order to avoid the problem described above, we chose a different representing of the problem.
 
 Our new framing is more similar to the way a human try to solve a Flow Free puzzle: we want to create paths between each pair of matching colors dot cells, while the goal is
-1. no cross or overlap between paths
-2. no cells which remain empty (cover the entire board)
+1. no cross or overlap between paths.
+2. no cells of the grid which remain empty (i.e. cover the entire board).
 
-With that framing of the problem we build a better genetic-algorithm based solver.
+With that framing of the problem we built a better genetic-algorithm based solver.
 
 ## Paths Based Solver
 
 We used genetic algorithm based on the representing of the problem described above:
 
-Representing of a solution: each color has a single path between the two dot cells (if succeed to generate it).
+<ins>Representing of an individual (solution)</ins>: each color has a single path between the two dot cells (if succeed to generate it, else has no path).
 
-- initial population - each individual is a grid contains a randomly generated path between the two dot cells for each color (or no path if not secceed generate one).
-- selection - tournament selection - the best is chosen from a small group of individuals.
-- crossover - colors crossover, i.e. swaps paths of some colors (randomly chosen) among a pair of parents.
-- mutation - n-colors mutation, i.e. change the path (randomly generated) of n colors (randomly chosen).
-- fitness evaluator - fitness of individual (grid) is defined to be the number of collisions among paths (per cell). Notice that now we want to minimize the fitness, and the minimum and best fitness is 0.
+- <ins>initial population</ins> - each individual is a grid contains a randomly generated path between the two dot cells for each color (or no path if not succeed to generate one).
+- <ins>selection</ins> - tournament selection - the best is chosen from a small group of individuals.
+- <ins>crossover</ins> - colors crossover, i.e. swaps paths of some (randomly chosen) colors among a pair of parents.
+- <ins>mutation</ins> - n-colors mutation, i.e. change the path (randomly generate the new path) of some n (randomly chosen) colors.
+- <ins>fitness evaluator</ins> - fitness of individual (grid) is defined to be the number of collisions among paths (per cell). Notice that now we want to minimize the fitness, and the minimum and best fitness is 0.
 
 ## Optimizations
 
@@ -109,7 +113,7 @@ We optimized the randomly generate path function in two aspects:
    
 
 2. **DeadEnd Checks** - We modified the generate path function to reject DeadEnd paths, which will be noise and keeps GA away from finding the solution.
-   <br>A DeadEnd path is a path that will not be consistent with a complete solution. There are some kinds of DeadEnd path:
+   <br>A DeadEnd path is a path that will not be consistent with any complete solution. There are some kinds of DeadEnd path:
     - **Block a color.** i.e. there is no path between the both dots of a color without cross the DeadEnd path. <br><br>
       <img width="351" alt="Screenshot 2024-03-06 at 23 03 48" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/d111269d-aad3-4fbc-87fd-d35a36fa7536"><br>
       The blue color is blocked.
@@ -147,7 +151,7 @@ The bottom right corner cell must be orange. <br>
 <img width="253" alt="Screenshot 2024-03-07 at 1 03 52" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/b8b07afa-83a2-4aa1-bfc7-22b4d6a3ba5e"> <br>
 Next, the cell above must be orange as well. And so on...<br>
 
-The result is a smaller problem space, where the cells that the algorithm determined are fixed. 
+The result is a smaller problem space, where the colors of cells that the algorithm determined are fixed. 
 
 We found out that for small puzzles, Arc Consistency itself solves the puzzles:
 <p float="center" align="center">
@@ -156,7 +160,7 @@ We found out that for small puzzles, Arc Consistency itself solves the puzzles:
 <img align="center" width="353" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/ed6e7c08-4b2f-4b51-b569-e90891209164" /> 
 </p>
 
-And for lots of the big puzzles it achives really good results:
+And for lots of the big puzzles it achieves really good results:
 <p float="center" align="center">
 <img align="center" width="451" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/31a51169-6187-4553-bc31-5faeaa436074" />
 &emsp; 
@@ -165,11 +169,20 @@ And for lots of the big puzzles it achives really good results:
 
 ## Our Flow Free Solver
 
-We run Arc Consistency first, get more constrained space of the problem, i.e. problem space is reduced. Then we define a constrained version of the problem, with fixed cells (which determined in Arc Consistency). On that constrained version of the problem, we run the Paths Based Solver and get great solutions!
+- First running Arc Consistency to get more constrained space of the problem and defining a constrained version of the problem, with fixed cells (which determined in Arc Consistency). <br>After this step problem space is reduced.
+- Then running Paths Based Solver on the constrained version of the problem, including optimizations in path generation and smart crossover+mutation as mentioned above.
+- Get great solutions!
 
 <p float="center" align="center">
 <img align="center" width="501" alt="Screenshot 2024-03-07 at 1 28 56" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/6a06ee21-d123-468a-adb8-9f2c3d35e9db">
 </p>
+
+## Overview of the code
+
+We use EC-KitY - Python tool kit for doing evolutionary computation. We use tkinter - Python package for the GUI parts. We use matplotlib - Python library for the statistics part.
+
+
+
 
 ## Extention for Hard Puzzles
 
