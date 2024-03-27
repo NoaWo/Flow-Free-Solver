@@ -264,8 +264,6 @@ We examine the best fitness achieved by using different population sizes, with d
 
 ![Screenshot 2024-03-27 at 23 57 40](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/480b45a9-a503-4561-9c4e-341357c78b12)
 
-![Screenshot 2024-03-28 at 0 15 12](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/12314f84-d2e8-49c6-8c0a-8b1391cc7ddf)
-
 ![Screenshot 2024-03-28 at 0 23 16](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/e710e322-a11c-46cf-bb21-61b5addcf1e3)
 
 <ins>Puzzles of size > 10:</ins> Usually did not converge with many generations and large population, but one can see an improvment in the best fitness as
