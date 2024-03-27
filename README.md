@@ -179,7 +179,11 @@ And for lots of the big puzzles it achieves really good results:
 
 ## Overview of the code
 
-We use EC-KitY - Python tool kit for doing evolutionary computation. We use tkinter - Python package for the GUI parts. We use matplotlib - Python library for the statistics part.
+We use EC-KitY - Python tool kit for doing evolutionary computation. 
+
+We use tkinter - Python package for the GUI parts. 
+
+We use matplotlib - Python library for the statistics part.
 
 
 
