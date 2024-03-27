@@ -246,7 +246,11 @@ Fitness: 2<br>
 
 ## Statistics and Takeaways
 
-We examine the best fitness achieved by using different population sizes, with different sizes of puzzles. <br>Since it is a random algorithm, one run is not representative. So, we examine the results for 3 or more runs. <br>Since the fitness is much higher in the beginning, the plot starting from generation #5, so we can see the fluctuations in the graph better.
+We examine the best fitness achieved by using different population sizes, with different sizes of puzzles. 
+
+Since it is a random algorithm, one run is not representative. So, we examine the results for 3 or more runs. 
+
+Since the fitness is much higher in the beginning, the plot starting from generation #5, so we can see the fluctuations in the graph better.
 
 ### Results:
 
