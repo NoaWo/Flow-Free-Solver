@@ -282,4 +282,4 @@ We examine the best fitness achieved by using different population sizes, with d
 ## How to Run
 
 - Install python packages: tkinter, eckity, matplotlib. You can use pip install.
-- Run main.py
+- Run paths_based_solver/main.py
