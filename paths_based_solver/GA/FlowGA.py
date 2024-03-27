@@ -24,7 +24,7 @@ class FlowGA:
         self.population_size = population_size
         self.max_generation = max_generation
         self.elitism_rate = elitism_rate
-        self.flow_statistics = FlowStatistics()
+        self.statistics = FlowStatistics()
         self.algo = SimpleEvolution(
             Subpopulation(creators=self.creator,
                           population_size=self.population_size,
@@ -39,13 +39,13 @@ class FlowGA:
                               #               random_partition_size=True, probability=0.005, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
-                                                  n=1, probability=0.15, is_smart=False),
+                                                  n=3, probability=0.15, is_smart=False),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
-                                                  n=1, probability=0.90, is_good=True),
+                                                  n=self.arc_board.colors - 1, probability=0.90, is_good=True),
                               FlowNColorsMutation(self.arc_board.colors, self.arc_board.rows, self.arc_board.columns,
                                                   self.creator.generate_path_with_attempts,
-                                                  n=1, probability=0.35, is_smart=True),
+                                                  n=2, probability=0.35, is_smart=True),
                           ],
                           selection_methods=[
                               # (selection method, selection probability) tuple
@@ -53,9 +53,9 @@ class FlowGA:
                               # (ElitismSelection(num_elites=4, higher_is_better=False), 1)
                           ]),
             breeder=SimpleBreeder(),
-            max_workers=20,
+            max_workers=30,
             max_generation=self.max_generation,
-            statistics=self.flow_statistics,
+            statistics=self.statistics,
             termination_checker=self.termination_checker,
             random_seed=time()
         )
@@ -79,17 +79,19 @@ class FlowGA:
             matrix[cell2[0]][cell2[1]] = [-color]
         return matrix
 
-    def run(self):
+    def run(self, show_res=True):
         # evolve the generated initial population
         self.algo.evolve()
         # Execute (show) the best solution
         board, result, fitness = self.algo.execute()
 
-        print(result)
-        print("Fitness: " + str(fitness))
-        matrix_to_draw = self.get_solved_matrix(board)
-        stats = self.flow_statistics.get_statistics()
-        draw_board(matrix_to_draw)
+        if show_res:
+            print(result)
+            print("Fitness: " + str(fitness))
+            matrix_to_draw = self.get_solved_matrix(board)
+            draw_board(matrix_to_draw)
+
+        stats = self.statistics.get_statistics()
         if fitness == 0:
             return True, stats
         return False, stats

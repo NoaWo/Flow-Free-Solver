@@ -3,7 +3,6 @@ from sys import stdout
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 
 
-
 class FlowStatistics(BestAverageWorstStatistics):
     def __init__(self, format_string=None, output_stream=stdout):
         super().__init__(format_string, output_stream)
@@ -11,6 +10,7 @@ class FlowStatistics(BestAverageWorstStatistics):
 
     def get_statistics(self):
         return self.statistics
+
     def write_statistics(self, sender, data_dict):
         print(f'generation #{data_dict["generation_num"]}', file=self.output_stream)
         for index, sub_pop in enumerate(data_dict["population"].sub_populations):
