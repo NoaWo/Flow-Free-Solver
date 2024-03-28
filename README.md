@@ -189,38 +189,38 @@ We use matplotlib - Python library for the statistics part.
 - paths_based_solver
   - arc_consistency
     - **ArcConsistency.py** class ArcConsistency contains the arc consistency implementation.
-      - function **arc_consistency** implement the Arc Consistency algorithm
-      - function **convert_to_smaller_problem** define a constrained version of the problem
+      - function **arc_consistency** implements the Arc Consistency algorithm
+      - function **convert_to_smaller_problem** defines a constrained version of the problem
   - boards
-    - **Board.py** class Board contain all data needed for board representation.
-    - **ArcConsistencyBoard.py** class ArcConsistencyBoard support board representation with fixed cells.
+    - **Board.py** class Board contains all data needed for board representation.
+    - **ArcConsistencyBoard.py** class ArcConsistencyBoard supports board representation with fixed cells.
   - GA
     - **BoardIndividual.py** class BoardIndividual extends class Individual of eckity. Individual represents a board.
     - **FlowCreator.py** class FlowCreator extends class Creator of eckity. Create individuals by generating path for each color on board.
-      - function **generate_path** implement the random generating path.
-      - function **detect_deadend_path** detect DeadEnd path in order to reject them.
+      - function **generate_path** implements the random generating path.
+      - function **detect_deadend_path** detects DeadEnd path in order to reject them.
     - **FlowCrossover.py** class FlowCrossover extends class GeneticOperator of eckity. Implement the crossover operator.
-      - function **random_partition** implement the default crossover by random partition of colors to crossover.
-      - function **smart_partition** implement the optimization of smart crossover by choosing the partition smartly.
+      - function **random_partition** implements the default crossover by random partition of colors to crossover.
+      - function **smart_partition** implements the optimization of smart crossover by choosing the partition smartly.
     - **FlowEvaluator.py** class FlowEvaluator extends class SimpleIndividualEvaluator of eckity. Compute the fitness value by counting collisions.
     - **FlowNColorsMutation.py** class FlowNColorsMutation extends class FailableOperator of eckity. Implement the mutation operator.
-      - function **default_color_selector** implement the default mutation by randomly choosing color for mutation.
-      - function **good_color_selector** implement the optimization of smart mutation with high prbability to generate path for color which the individual has no path of.
-      - function **smart_color_selector** implement the optimization of smart mutation that chooses color smartly by choosing a color which his path colliding with another path.
+      - function **default_color_selector** implements the default mutation by randomly choosing color for mutation.
+      - function **good_color_selector** implements the optimization of smart mutation with high prbability to generate path for color which the individual has no path of.
+      - function **smart_color_selector** implements the optimization of smart mutation that chooses color smartly by choosing a color which his path colliding with another path.
     - **FlowTerminationChecker.py** class FlowTerminationChecker extends class TerminationChecker of eckity. The termination condition is best fitness = 0.
     - **FlowStatistics.py** class FlowStatistics extends class BestAverageWorstStatistics of eckity. Storing the Fitness statistics for each generation.
-    - **FlowGA.py** class FlowGA storing all the data needed for running the genetic algorithm with eckity.
-      - function **run** run genetic algorithm with eckity.
-      - function **get_solved_matrix** convert the board of the best individual to a solved board that can be printed.
+    - **FlowGA.py** class FlowGA stores all the data needed for running the genetic algorithm with eckity.
+      - function **run** runs genetic algorithm with eckity.
+      - function **get_solved_matrix** converts the board of the best individual to a solved board that can be printed.
   - gui
     - **Color.py** Enum of colors.
     - **FlowGUI.py** implement of GUI for board.
   - statistics
     - **plot.py** plot the statistics of GA runs.
   - **main.py** the main program. Let the user choose a puzzle and try to solve it.
-    - function **main** using default population size and number of generations according to the chosen board's size, support increasing them if the run did not converge.
-    - function **run_for_statistics** run 3 times the GA on the chosen board and plot the results. The population size and number of generations are to the user's choice.
-  - **Puzzles.py** contain a variety of Flow Free puzzles.
+    - function **main** uses default population size and number of generations according to the chosen board's size, supports increasing them if the run did not converge.
+    - function **run_for_statistics** runs 3 times the GA on the chosen board and plot the results. The population size and number of generations are to the user's choice.
+  - **Puzzles.py** contains a variety of Flow Free puzzles.
 
 ## Extention for Hard Puzzles
 
