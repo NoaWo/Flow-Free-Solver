@@ -279,6 +279,8 @@ Since the fitness is much higher in the beginning, the plot starting from genera
 
 - Number of population that required for convergence depends on the board size. While small and medium puzzles (size < 9) works well with population of 300-500, the big puzzles (size between 9-10) requires 1000-2000, and even more is required for the hard (huge) puzzles (size > 10). <br> This is happen since the number of possible paths grows exponentially in board size.
 
+- If there is convergence, it is relatively fast, meaning it is better to run a higher population size with fewer generations.
+
 - In practice: The population size is defined to be 500 for puzzles of size < 10 and 1000 for size >= 10. There is an option to enlarge that and try again if the algorithm did not converge to a solution. The number of generations is defined to be 200 for puzzles of size < 10 and 500 for size >= 10, and it grows with the population size.
 
 - Arc Consistency works very well of some puzzles! For example, it can reduce the problem space of a puzzle of size 9 or 10 to be as a puzzle of size 6 or 7. As a result, we need much less population and generations for those puzzles even though they are big puzzles, and the run takes much less time. This is a big improvement!
