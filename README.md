@@ -4,7 +4,7 @@ Shahar Bar and Noa Wolfgor
 ## Flow Free Game
 Flow Free is a simple puzzle game.
 
-Each puzzle is a grid contains 2 dots of each color. There are puzzles in a variety of sizes.
+Each puzzle is a grid that contains 2 dots of each color. There are puzzles in a variety of sizes.
 
 <p float="center" align="center">
   <img align="center" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/c8ef63da-df6e-4b32-b1f7-4325027b9fc1" width="252" />
@@ -12,7 +12,7 @@ Each puzzle is a grid contains 2 dots of each color. There are puzzles in a vari
   <img align="center" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/b2331871-489e-449e-9f9b-9e9e619725a3" width="397" /> 
 </p>
 
-The goal is connecting matching colors with a pipe to create a Flow. 
+The goal is to connect matching colors with a pipe to create a Flow. 
 
 To solve the puzzle, one needs to pair all colors, and cover the entire board, without pipes cross or overlap.
 
@@ -226,9 +226,7 @@ We use matplotlib - Python library for the statistics part.
 
 We tried to run our solver on hard puzzles (size > 10).
 
-<p float="center" align="center">
 <img width="547" alt="Screenshot 2024-03-07 at 2 30 14" src="https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/6aa9c998-fa7e-4f27-8964-43563f219fb7">
-</p>
 
 Results:
 
@@ -250,11 +248,11 @@ We examine the best fitness achieved by using different population sizes, with d
 
 Since it is a random algorithm, one run is not representative. So, we examine the results for 3 or more runs. 
 
-Since the fitness is much higher in the beginning, the plot starting from generation #5, so we can see the fluctuations in the graph better.
+Since the fitness is much higher in the beginning, the plot starts from generation #5, so we can see the fluctuations in the graph better.
 
 ### Results:
 
-<ins>Puzzles of size <= 8:</ins> converge to solution (fitness 0) in only few generations (even less than 10) using population of 300+. But using smaller population, it takes much more generations and even sometimes does not converge. <br>Notice that there exists puzzles that completely solved by Arc Consistency itself. 
+<ins>Puzzles of size <= 8:</ins> converge to solution (fitness 0) in only few generations (even less than 10) using population of 300+. But using smaller population, it takes much more generations and even sometimes does not converge. <br>Notice that there exist puzzles that are completely solved by Arc Consistency alone. 
 
 <ins>Puzzles of size 9x9:</ins>
 
@@ -270,14 +268,14 @@ Since the fitness is much higher in the beginning, the plot starting from genera
 
 ![Screenshot 2024-03-28 at 0 23 16](https://github.com/NoaWo/Flow-Game-Solver/assets/135462814/e710e322-a11c-46cf-bb21-61b5addcf1e3)
 
-<ins>Puzzles of size > 10:</ins> Usually did not converge with many generations and large population, but one can see an improvment in the best fitness as
+<ins>Puzzles of size > 10:</ins> Usually did not converge with many generations and large population, but one can see an improvement in the best fitness as
  the population size grows. For example: puzzle size 12x12: with population 1000: after 1000 generations it achieved fitness 24. with population 2000: after 1000 generations it achieved fitness 20. 
 
 ### Conclusions
 
-- Population size has the greatest effect on convergence! With big enough population the convergence is relatively fast, while with a small population it usually does not converge to solution, even with much many generations.<br> This phenomenon occurs because the convergence of the algorithm is highly dependent on the initial random population, from which the individuals keep getting better and better and converge to a better solution. If the population is small, there are much less random paths that generated in the initial step. As a result, we miss a lot of possible paths. In this situation, even the convergence of all individuals to a best individual will not achieve a complete solution. <br>(Note that although the mutation operator generates new paths as well, it happens on a much smaller scale than in the initial step).
+- Population size has the greatest effect on convergence! With big enough population the convergence is relatively fast, while with a small population it usually does not converge to the solution, even with much more generations.<br> This phenomenon occurs because the convergence of the algorithm is highly dependent on the initial random population, from which the individuals keeps getting better and better and converge to a better solution. If the population is small, there are much less random paths that generated in the initial step. As a result, we miss a lot of possible paths. In this situation, even the convergence of all individuals to a best individual will not achieve a complete solution. <br>(Note that although the mutation operator generates new paths as well, it happens on a much smaller scale than in the initial step).
 
-- Number of population that required for convergence depends on the board size. While small and medium puzzles (size < 9) works well with population of 300-500, the big puzzles (size between 9-10) requires 1000-2000, and even more is required for the hard (huge) puzzles (size > 10). <br> This is happen since the number of possible paths grows exponentially in board size.
+- The number of population that's required for convergence depends on the board size. While small and medium puzzles (size < 9) work well with population of 300-500, big puzzles (size between 9-10) require 1000-2000, and even more is required for the hard (huge) puzzles (size > 10). <br> This happens since the number of possible paths grows exponentially in relation to the board size.
 
 - If there is convergence, it is relatively fast, meaning it is better to run a higher population size with fewer generations.
 
