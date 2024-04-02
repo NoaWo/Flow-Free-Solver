@@ -252,7 +252,7 @@ Since the fitness is much higher in the beginning, the plot starts from generati
 
 ### Results:
 
-<ins>Puzzles of size <= 8:</ins> converge to solution (fitness 0) in only few generations (even less than 10) using population of 300+. But using smaller population, it takes much more generations and even sometimes does not converge. <br>Notice that there exist puzzles that are completely solved by Arc Consistency alone. 
+<ins>Puzzles of size <= 8:</ins> converge to solution (fitness 0) in only few generations (even less than 10) using population of 300+. But using smaller population, it takes much more generations and even sometimes does not converge. <br>Notice that there exists puzzles that are completely solved by Arc Consistency alone. 
 
 <ins>Puzzles of size 9x9:</ins>
 
